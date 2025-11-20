@@ -7,6 +7,13 @@ The data is related with direct marketing campaigns (phone calls) of a Portugues
 - Daniel Yorke 
 - Jackson Lu
 - Mohammed Ibrahim
+# Usage
+First time running the project,
+run the following from the root of this repository:
+
+``` bash
+conda-lock install --name term-deposit-predictor conda-lock.yml
+```
 # Dependencies 
   - python>=3.10
   - pandas==2.1.4
