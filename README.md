@@ -6,7 +6,7 @@ The data is related with direct marketing campaigns (phone calls) of a Portugues
 - Charlene Chin
 - Daniel Yorke 
 - Jackson Lu
--Mohammed Ibrahim
+- Mohammed Ibrahim
 # Dependencies 
   - python>=3.10
   - pandas==2.1.4
