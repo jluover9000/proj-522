@@ -15,8 +15,11 @@ run the following from the root of this repository:
 conda-lock install --name term-deposit-predictor conda-lock.yml
 ```
 # Dependencies 
-  - python>=3.10
-  - pandas==2.1.4
-  - ucimlrepo
+  - `python>=3.10`
+  - `pandas==2.1.4`
+  - `ucimlrepo`
+  - `jupyterlab`
+  - `nb_conda_kernels`
+  - Python and packages listed in [`environment.yml`](environment.yml)
 # Licenses
 MIT License
