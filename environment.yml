@@ -9,13 +9,13 @@ dependencies:
   - ipykernel
   - pip
   - ucimlrepo
-  - scikit-learn=1.3.2
-  - vegafusion>=2.0.3
+  - scikit-learn>=1.3.2
   - vl-convert-python>=1.8.0
-  - requests=2.31.0
-  - notebook=6.5.4
-  - jupyter_contrib_nbextensions=0.7.0
+  - requests>=2.31.0
+  - notebook>=6.5.4
+  - jupyter_contrib_nbextensions>=0.7.0
   - pyarrow>=14.0.0
   - pip:
     - altair_ally>=0.1.1
+    - vegafusion>=2.0.3
 
