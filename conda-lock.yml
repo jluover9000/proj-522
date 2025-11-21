@@ -13,10 +13,10 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 9c07d6a2ae58e086bf4c1935e4f0ca0e99513eac29e6bed080fd0c89ea2ceec4
-    osx-arm64: 7a757775f925096b6d5904d2a32a2ff418f55e14ac901492f6748c9dff10329b
-    osx-64: 9855207fa81c07eafbac1bb5cf37469cef8c58e2c9c7029d3bc83d3960319d56
-    win-64: 177f4eb2dc4eabb18340013c628ef21f247f29631e29ef7d139976987d626701
+    linux-64: 013239d65a537b53d3ddc96ec421f08f3e2856ea85411c02b675cbedf7ea07f3
+    osx-arm64: c476a762fcc7c7e41e45e518205e28efadbb3f6b66875f6ed25048fb271fe974
+    osx-64: eeeedbc184785e7301231d22458fb9e417b5c8421a6feac1100f5019dc93c9b9
+    win-64: 97978ee7d33c0930e29a6a6ca8679b866f36a7daa63f152fb3553b2f759536be
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -6247,10 +6247,10 @@ package:
   dependencies:
     __glibc: '>=2.17,<3.0.a0'
     zstd: '>=1.5.7,<1.6.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/ld_impl_linux-64-2.45-h1aa0949_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/ld_impl_linux-64-2.45-default_1234567_2.conda
   hash:
-    md5: 1450224b3e7d17dfeb985364b77a4d47
-    sha256: 32321d38b8785ef8ddcfef652ee370acee8d944681014d47797a18637ff16854
+    md5: 1d61642f2f613525ae3babf8ca408e84
+    sha256: 696424b82630d756c20bd92822c5782202e8a7396fe31c250651ee07795f54f7
   category: main
   optional: false
 - name: libabseil
@@ -7461,7 +7461,7 @@ package:
   category: main
   optional: false
 - name: libglib
-  version: 2.86.1
+  version: 2.86.2
   manager: conda
   platform: linux-64
   dependencies:
@@ -7470,11 +7470,11 @@ package:
     libgcc: '>=14'
     libiconv: '>=1.18,<2.0a0'
     libzlib: '>=1.3.1,<2.0a0'
-    pcre2: '>=10.46,<10.47.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libglib-2.86.1-h32235b2_2.conda
+    pcre2: '>=10.47,<10.48.0a0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/libglib-2.86.2-h6548e54_1.conda
   hash:
-    md5: 986dcf488a1aced411da84753d93d078
-    sha256: fc82277d0d6340743732c48dcbac3f4e9ee36902649a7d9a02622b0713ce3666
+    md5: f01292fb36b6d00d5c51e5d46b513bcf
+    sha256: bc71e13726871b1de958b73c000391c89ca3430fe8c787f325e682e51acebea5
   category: main
   optional: false
 - name: libgomp
@@ -10625,7 +10625,7 @@ package:
   category: main
   optional: false
 - name: pcre2
-  version: '10.46'
+  version: '10.47'
   manager: conda
   platform: linux-64
   dependencies:
@@ -10633,10 +10633,10 @@ package:
     bzip2: '>=1.0.8,<2.0a0'
     libgcc: '>=14'
     libzlib: '>=1.3.1,<2.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/pcre2-10.46-h1321c63_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/pcre2-10.47-haa7fec5_0.conda
   hash:
-    md5: 7fa07cb0fb1b625a089ccc01218ee5b1
-    sha256: 5c7380c8fd3ad5fc0f8039069a45586aa452cf165264bc5a437ad80397b32934
+    md5: 7a3bff861a6583f1889021facefc08b1
+    sha256: 5e6f7d161356fefd981948bea5139c5aa0436767751a6930cb1ca801ebb113ff
   category: main
   optional: false
 - name: pexpect
@@ -15727,5 +15727,101 @@ package:
   hash:
     md5: 21f56217d6125fb30c3c3f10c786d751
     sha256: bc64864377d809b904e877a98d0584f43836c9f2ef27d3d2a1421fa6eae7ca04
+  category: main
+  optional: false
+- name: altair-ally
+  version: 0.1.1
+  manager: pip
+  platform: linux-64
+  dependencies:
+    altair: '*'
+    pandas: '*'
+    vega-datasets: '*'
+  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
+  hash:
+    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
+  category: main
+  optional: false
+- name: altair-ally
+  version: 0.1.1
+  manager: pip
+  platform: osx-64
+  dependencies:
+    altair: '*'
+    pandas: '*'
+    vega-datasets: '*'
+  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
+  hash:
+    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
+  category: main
+  optional: false
+- name: altair-ally
+  version: 0.1.1
+  manager: pip
+  platform: osx-arm64
+  dependencies:
+    altair: '*'
+    pandas: '*'
+    vega-datasets: '*'
+  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
+  hash:
+    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
+  category: main
+  optional: false
+- name: altair-ally
+  version: 0.1.1
+  manager: pip
+  platform: win-64
+  dependencies:
+    altair: '*'
+    pandas: '*'
+    vega-datasets: '*'
+  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
+  hash:
+    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
+  category: main
+  optional: false
+- name: vega-datasets
+  version: 0.9.0
+  manager: pip
+  platform: linux-64
+  dependencies:
+    pandas: '*'
+  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
+  hash:
+    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
+  category: main
+  optional: false
+- name: vega-datasets
+  version: 0.9.0
+  manager: pip
+  platform: osx-64
+  dependencies:
+    pandas: '*'
+  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
+  hash:
+    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
+  category: main
+  optional: false
+- name: vega-datasets
+  version: 0.9.0
+  manager: pip
+  platform: osx-arm64
+  dependencies:
+    pandas: '*'
+  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
+  hash:
+    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
+  category: main
+  optional: false
+- name: vega-datasets
+  version: 0.9.0
+  manager: pip
+  platform: win-64
+  dependencies:
+    pandas: '*'
+  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
+  hash:
+    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
   category: main
   optional: false

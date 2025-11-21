@@ -17,3 +17,6 @@ dependencies:
   - requests=2.31.0
   - notebook=6.5.4
   - jupyter_contrib_nbextensions=0.7.0
+  - pip:
+    - altair_ally>=0.1.1
+
