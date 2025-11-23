@@ -7,6 +7,12 @@ Our final classifier performed fairly well on an unseen test data set, achieving
 - Daniel Yorke 
 - Jackson Lu
 - Mohammed Ibrahim
+
+# Report
+
+The final report can be found
+[here](https://jluover9000.github.io/proj-522/).
+
 # Usage
 First time running the project,
 run the following from the root of this repository:
