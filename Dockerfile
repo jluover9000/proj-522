@@ -1,8 +1,8 @@
 FROM quay.io/jupyter/minimal-notebook:afe30f0c9ad8
 
-COPY conda-linux-64.lock /tmp/conda-linux-64.lock
+COPY conda-lock.yml /tmp/conda-lock.yml
 
-RUN conda install --yes --name base --file /tmp/conda-linux-64.lock ; \
+RUN conda-lock install --name base /tmp/conda-lock.yml && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
