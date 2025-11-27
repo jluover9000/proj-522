@@ -14,19 +14,23 @@ The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
 
 # Usage
-First time running the project,
+1. First time running the project,
 run the following from the root of this repository:
 
 ``` bash
-conda-lock install --name term-deposit-predictor conda-lock.yml
+docker compose up
 ```
-To run the analysis notebook, launch JupyterLab with the following command:
+2. In the terminal, look for a URL that starts with `http://127.0.0.1:8888/lab?token=...`. Copy and paste that URL into your browser.
 
-``` bash  
-conda activate term-deposit-predictor
-jupyter lab
-```
-Then open `term-deposit-predictor-analysis.ipynb` in JupyterLab.  
+3. To run the analysis,
+open `docs/term-deposit-predictor-analysis.ipynb` in Jupyter Lab you just launched
+and under the "Kernel" menu click "Restart Kernel and Run All Cells...".
+
+### Clean up
+
+To shut down the container and clean up the resources, 
+type `Cntrl` + `C` in the terminal
+where you launched the container, and then type `docker compose rm`
 
 # Dependencies 
   - `python>=3.10`
