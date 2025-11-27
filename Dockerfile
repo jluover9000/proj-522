@@ -1,8 +1,10 @@
 FROM quay.io/jupyter/minimal-notebook:afe30f0c9ad8
 
-COPY conda-linux-64.lock /tmp/conda-linux-64.lock
+COPY environment.yml /tmp/environment.yml
 
-RUN conda install --yes --name base --file /tmp/conda-linux-64.lock ; \
+# Install packages from environment.yml
+RUN mamba env update -n base -f /tmp/environment.yml && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
