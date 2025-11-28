@@ -43,7 +43,7 @@ jobs:
 
       - name: Pull Docker image
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:main
+          docker pull ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:main
 
       # explicitly activate the dockerlock environment to run the analysis
       # otherwise comment out the conda run part
@@ -52,7 +52,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:main \
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:main \
             conda run --no-capture-output -n dockerlock \
             jupyter nbconvert --to notebook --execute analysis.ipynb --output analysis-output.ipynb
 
