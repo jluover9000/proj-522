@@ -36,7 +36,71 @@ where you launched the container, and then type `docker compose rm`
 1. After editing `environment.yml`
 2. Run `rm conda-lock.yml` then enter `y`
 3. Run `conda-lock lock --platform linux-64 --platform linux-aarch64 --file environment.yml`
-   
+## Workflow 
+``` bash
+┌─────────────────────────────────────────────────────────────────┐
+│                    Developer Makes Changes                       │
+│                                                                   │
+│  Edit any of:                                                    │
+│  • environment.yml                                               │
+│  • Dockerfile                                                    │
+│  • conda-lock.yml                                                │
+│  • .github/workflows/docker-publish.yml                          │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         │ git push
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              GitHub Actions: docker-publish.yml                  │
+│                                                                   │
+│  1. Update conda-lock.yml (if needed)                            │
+│  2. Build multi-platform Docker image                            │
+│     • linux/amd64                                                │
+│     • linux/arm64                                                │
+│  3. Push to Docker Hub with tags:                                │
+│     • charlene1010/term-deposit-predictor:latest                 │
+│     • charlene1010/term-deposit-predictor:<commit-sha>           │
+│     • charlene1010/term-deposit-predictor:<branch-name>          │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         │ on completion
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              GitHub Actions: run-analysis.yml                    │
+│                                                                   │
+│  1. Pull the newly built Docker image                            │
+│  2. Run analysis scripts inside container                        │
+│  3. Generate reports/outputs                                     │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         │ analysis complete
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                  Developer Updates docker-compose.yml            │
+│                                                                   │
+│  1. Copy new image SHA from GitHub Actions logs                  │
+│     Example: 4509ab91300d6d7725548bd407dca8958057c4a3           │
+│                                                                   │
+│  2. Update docker-compose.yml:                                   │
+│     image: charlene1010/term-deposit-predictor:<new-sha>         │
+│                                                                   │
+│  3. Commit and push:                                             │
+│     git add docker-compose.yml                                   │
+│     git commit -m "Update Docker image to <new-sha>"             │
+│     git push                                                     │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+                         │ push to GitHub
+                         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    Team Members Pull Changes                     │
+│                                                                   │
+│  1. git pull                                                     │
+│  2. docker compose up                                            │
+│     • Automatically pulls new image with specific SHA            │
+│     • Everyone uses exact same environment                       │
+└─────────────────────────────────────────────────────────────────┘
+```
 # Dependencies 
   - `python>=3.10`
   - `pandas==2.1.4`
