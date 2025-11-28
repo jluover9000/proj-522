@@ -5,6 +5,6 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./:/home/jovyan/work
+      - ./:/workplace  # Changed from /home/jovyan/work
     stdin_open: true
     tty: true
