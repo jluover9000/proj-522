@@ -13,11 +13,11 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: d44ad7b949703a8d202f042663d44c4f839c08cf41f3397db43a2ac080b8d2ab
-    linux-aarch64: 505a201d1e6457942ac5021ce56117a429708c707d069df2dfd4aaf3b245ff2e
-    osx-64: 04296fec96d352c337949d094946a7fe59526ec7358719903fd5b0cf02c85fde
-    osx-arm64: 73cce490c6a8d7a7be4f89a90ee8d62d98fa191c321ea6fbbcdbeca562d28983
-    win-64: 7987bf8155e1c148e48203ecbc93c5b44367da75d1f9940372879e40a7dd4f2a
+    linux-64: e5c1687f2686e4b16229dbd23a4a01d514e4e79cedb3046c4ac0ecaa41a8d5cc
+    linux-aarch64: f0d6f8f7ebb38fce6272b73d387d62d157e2167895476c93a66d1b63bac9a78c
+    osx-64: b9249267d029d3fa2388a43ab366e2c76e0047191e7c13b699cb19b01ef488db
+    osx-arm64: ba0f6e656c2087efd4ee9ed57c75865fce83db58d709921a7d678f312b8d3e5d
+    win-64: 5007e9126169890bb0e9383c5b60c521dc5c003951ae283bf7f285e1d34ab35f
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -14484,6 +14484,79 @@ package:
   hash:
     md5: cfccfd4e8d9de82ed75c8e2c91cab375
     sha256: 77193c99c6626c58446168d3700f9643d8c0dab1f6deb6b9dd039e6872781bfb
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    __glibc: '>=2.17,<3.0.a0'
+    libgcc: '>=14'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/vl-convert-python-1.8.0-py313h07c4f96_1.conda
+  hash:
+    md5: 2a88dd50861af653675132190c623bb5
+    sha256: 637cd682cdc1eae7b132f0e96ec365e7768d451778b5d5e85f35184968570a13
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: conda
+  platform: linux-aarch64
+  dependencies:
+    libgcc: '>=14'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+  url: https://conda.anaconda.org/conda-forge/linux-aarch64/vl-convert-python-1.8.0-py313h6194ac5_1.conda
+  hash:
+    md5: f40044bcc76b93547f75f5575751d7f0
+    sha256: 0e1e4536d10346e3c9d312e29a5f20b700dae7b86acbff510bb8ae1cf471645e
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    __osx: '>=10.13'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/vl-convert-python-1.8.0-py313hf050af9_1.conda
+  hash:
+    md5: b4095e3d0c7d8a327a81f9c7c23008f5
+    sha256: a5b9a2e27f302dfb1863bd4a440a255363b488c7d386f342896487b1e0ac4f3d
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    __osx: '>=11.0'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/vl-convert-python-1.8.0-py313h6535dbc_1.conda
+  hash:
+    md5: e79e5e5447d9a26eb6fde565b222c0f9
+    sha256: 5aaa72732b5c91652ce57f31ee2eb70e5dc463c0911ab1fb91baaf7d47177c89
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/vl-convert-python-1.8.0-py313h8e0797b_1.conda
+  hash:
+    md5: 5790f97427224833784cce42e2d4622c
+    sha256: 4f2f36fe883e232103a21056147d76d152d2ed2afff67be94b48c528fbb4e72e
   category: main
   optional: false
 - name: wcwidth
