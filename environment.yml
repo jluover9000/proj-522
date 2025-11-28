@@ -1,4 +1,4 @@
-name: dockerlock
+name: term-deposit-predictor
 channels:
   - conda-forge
 dependencies:
@@ -11,6 +11,7 @@ dependencies:
   - ucimlrepo
   - pointblank
   - python>=3.10  # Specify Python version
+  - vl-convert-python>=1.8.0
   - pip:
     - deepchecks
     - vegafusion
