@@ -42,7 +42,7 @@ jobs:
 
       - name: Pull Docker image (by triggered commit SHA)
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.docker-tag.outputs.sha }}
+          docker pull ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:latest
 
       # explicitly activate the dockerlock environment to run the analysis
       # otherwise comment out the conda run part
@@ -51,7 +51,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.docker-tag.outputs.sha }} \
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:latest \
             conda run --no-capture-output -n term-deposit-predictor \
             jupyter nbconvert --to notebook --execute term-deposit-predictor-analysis.ipynb --output term-deposit-predictor-analysis-output.ipynb
 
