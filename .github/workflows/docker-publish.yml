@@ -100,7 +100,6 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:latest
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ github.ref_name }}
+
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache,mode=max
