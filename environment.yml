@@ -14,6 +14,7 @@ dependencies:
   - requests>=2.31.0
   - notebook>=6.5.4
   - pyarrow>=14.0.0
+  - setuptools
   - pip:
     - altair_ally>=0.1.1
     - vegafusion>=2.0.3
