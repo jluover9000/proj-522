@@ -53,7 +53,7 @@ jobs:
             -w /workspace \
             ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:latest \
             conda run --no-capture-output -n term-deposit-predictor \
-            jupyter nbconvert --to notebook --execute docs/term-deposit-predictor-analysis.ipynb --output docs/term-deposit-predictor-analysis-output.ipynb
+            jupyter nbconvert --to notebook --execute docs/term-deposit-predictor-analysis.ipynb --output term-deposit-predictor-analysis-output.ipynb
 
       - name: Upload analysis results
         uses: actions/upload-artifact@v4
