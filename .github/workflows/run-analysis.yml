@@ -1,9 +1,6 @@
 name: Run Analysis
 
 on:
-  push:
-    branches:
-      - main
   # Manual trigger
   workflow_dispatch:
   # Trigger when docker-build workflow completes successfully
@@ -25,13 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Get the SHA from the triggering workflow, or use current SHA if manual
+      # Get the SHA from the triggering workflow, or use current SHA if manual or push
       - name: Determine Docker image tag
         id: docker-tag
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ github.event_name }}" = "push" ]; then
+            # For manual runs and push events, use the current commit SHA
             echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
           else
+            # For workflow_run events, use the head SHA of the triggering workflow
             echo "sha=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_OUTPUT
           fi
 
@@ -41,9 +40,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Pull Docker image
+      - name: Pull Docker image (by triggered commit SHA)
         run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:main
+          docker pull ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.docker-tag.outputs.sha }}
 
       # explicitly activate the dockerlock environment to run the analysis
       # otherwise comment out the conda run part
@@ -52,12 +51,12 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:main \
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.docker-tag.outputs.sha }} \
             conda run --no-capture-output -n term-deposit-predictor \
-            jupyter nbconvert --to notebook --execute analysis.ipynb --output analysis-output.ipynb
+            jupyter nbconvert --to notebook --execute term-deposit-predictor-analysis.ipynb --output term-deposit-predictor-analysis-output.ipynb
 
       - name: Upload analysis results
         uses: actions/upload-artifact@v4
         with:
           name: analysis-results-${{ steps.docker-tag.outputs.sha }}
-          path: analysis-output.ipynb
+          path: term-deposit-predictor-analysis-output.ipynb
