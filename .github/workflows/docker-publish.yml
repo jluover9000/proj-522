@@ -59,7 +59,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add conda-lock.yml
           git commit -m ":wrench: Update conda-lock.yml"
-          git push https://x-access-token:${GH_TOKEN}@github.com/jluover9000/proj-522.git fix/add-arm64-support
+          git push origin fix/add-arm64-support
 
   build-and-push-docker:
     needs: update-lock-file
