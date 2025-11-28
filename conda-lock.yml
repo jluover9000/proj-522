@@ -13,10 +13,10 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: ce1e2a51501978747b0959facce7c3fdc0a2230864b5e15a5ad2cd984af62549
-    osx-arm64: 419c6e7894c893cb1921a5b16fad533d4208dfc2de4b8f229a9f4f166847610f
-    osx-64: 73e452ebf0d9f7c6922466a62622a6904221d7d4962a9f37ee840ca08f61dfcc
-    win-64: 4310ca6e88451af70a9be6e5f483bae18c952355c5a165a907e7dcf8bb5ad1bd
+    linux-64: 386e3930c91b2bebc6a77c93a6790005221f3f535fd72251a1ae39c24dfb328b
+    osx-arm64: ebd57a04f32bee341c490c38200e5eb5cee20be660ae48bc6923858078b4b060
+    osx-64: c1197cdb9f0c6b3ed9337d00345eef656bf0b47b860ec52edd7dbfa926379ed6
+    win-64: 728bd52564641fbc85cff4e7d82d61b31adb8f00d0f49b1862edbb2a02630066
     linux-aarch64: 22140e7b3ece1fb482f83f8abbcd2919074908cb8f8bd9ebc6b5974864038375
   channels:
   - url: conda-forge
@@ -5582,59 +5582,7 @@ package:
 - name: joblib
   version: 1.5.2
   manager: conda
-  platform: linux-64
-  dependencies:
-    python: '>=3.10'
-    setuptools: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/joblib-1.5.2-pyhd8ed1ab_0.conda
-  hash:
-    md5: 4e717929cfa0d49cef92d911e31d0e90
-    sha256: 6fc414c5ae7289739c2ba75ff569b79f72e38991d61eb67426a8a4b92f90462c
-  category: main
-  optional: false
-- name: joblib
-  version: 1.5.2
-  manager: conda
   platform: linux-aarch64
-  dependencies:
-    python: '>=3.10'
-    setuptools: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/joblib-1.5.2-pyhd8ed1ab_0.conda
-  hash:
-    md5: 4e717929cfa0d49cef92d911e31d0e90
-    sha256: 6fc414c5ae7289739c2ba75ff569b79f72e38991d61eb67426a8a4b92f90462c
-  category: main
-  optional: false
-- name: joblib
-  version: 1.5.2
-  manager: conda
-  platform: osx-64
-  dependencies:
-    python: '>=3.10'
-    setuptools: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/joblib-1.5.2-pyhd8ed1ab_0.conda
-  hash:
-    md5: 4e717929cfa0d49cef92d911e31d0e90
-    sha256: 6fc414c5ae7289739c2ba75ff569b79f72e38991d61eb67426a8a4b92f90462c
-  category: main
-  optional: false
-- name: joblib
-  version: 1.5.2
-  manager: conda
-  platform: osx-arm64
-  dependencies:
-    python: '>=3.10'
-    setuptools: ''
-  url: https://conda.anaconda.org/conda-forge/noarch/joblib-1.5.2-pyhd8ed1ab_0.conda
-  hash:
-    md5: 4e717929cfa0d49cef92d911e31d0e90
-    sha256: 6fc414c5ae7289739c2ba75ff569b79f72e38991d61eb67426a8a4b92f90462c
-  category: main
-  optional: false
-- name: joblib
-  version: 1.5.2
-  manager: conda
-  platform: win-64
   dependencies:
     python: '>=3.10'
     setuptools: ''
@@ -13375,27 +13323,6 @@ package:
 - name: scikit-learn
   version: 1.7.2
   manager: conda
-  platform: linux-64
-  dependencies:
-    __glibc: '>=2.17,<3.0.a0'
-    _openmp_mutex: '>=4.5'
-    joblib: '>=1.2.0'
-    libgcc: '>=14'
-    libstdcxx: '>=14'
-    numpy: '>=1.23,<3'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-    scipy: '>=1.8.0'
-    threadpoolctl: '>=3.1.0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/scikit-learn-1.7.2-py313h06d4379_0.conda
-  hash:
-    md5: f9b838aa75bd584fb85f46686f4f1453
-    sha256: 1867155e8c7d772ece3116a5ff6f970d129ef119a08a221fdd825a89b8be4a93
-  category: main
-  optional: false
-- name: scikit-learn
-  version: 1.7.2
-  manager: conda
   platform: linux-aarch64
   dependencies:
     _openmp_mutex: '>=4.5'
@@ -13411,88 +13338,6 @@ package:
   hash:
     md5: 3429e7f784493b22b831e7e67c5709c8
     sha256: ea9b9dad0ddd2867a1fdccfae10bcd909d4121fa42b01ab556c6e114890b4327
-  category: main
-  optional: false
-- name: scikit-learn
-  version: 1.7.2
-  manager: conda
-  platform: osx-64
-  dependencies:
-    __osx: '>=10.13'
-    joblib: '>=1.2.0'
-    libcxx: '>=19'
-    llvm-openmp: '>=19.1.7'
-    numpy: '>=1.23,<3'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-    scipy: '>=1.8.0'
-    threadpoolctl: '>=3.1.0'
-  url: https://conda.anaconda.org/conda-forge/osx-64/scikit-learn-1.7.2-py313hfce3ed8_0.conda
-  hash:
-    md5: 6455114ee5635a6202ff117df5612625
-    sha256: cadc425ccdec55accddf8a354ac7d73ae5f4a771fe70fb5c4285b91f50d6946f
-  category: main
-  optional: false
-- name: scikit-learn
-  version: 1.7.2
-  manager: conda
-  platform: osx-arm64
-  dependencies:
-    __osx: '>=11.0'
-    joblib: '>=1.2.0'
-    libcxx: '>=19'
-    llvm-openmp: '>=19.1.7'
-    numpy: '>=1.23,<3'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-    scipy: '>=1.8.0'
-    threadpoolctl: '>=3.1.0'
-  url: https://conda.anaconda.org/conda-forge/osx-arm64/scikit-learn-1.7.2-py313h6eea1c5_0.conda
-  hash:
-    md5: 1349ee599f5f142efecd398da4ca7dac
-    sha256: b45fe1eda6f86355f92a1bd0169bcb8281b42904ceb3bc2e2f1a0a02fa788ce5
-  category: main
-  optional: false
-- name: scikit-learn
-  version: 1.7.2
-  manager: conda
-  platform: win-64
-  dependencies:
-    joblib: '>=1.2.0'
-    numpy: '>=1.23,<3'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-    scipy: '>=1.8.0'
-    threadpoolctl: '>=3.1.0'
-    ucrt: '>=10.0.20348.0'
-    vc: '>=14.3,<15'
-    vc14_runtime: '>=14.44.35208'
-  url: https://conda.anaconda.org/conda-forge/win-64/scikit-learn-1.7.2-py313he28f1d7_0.conda
-  hash:
-    md5: 7fa033fe1d7585e9fdbc9b4a756f9e43
-    sha256: 20d75fd0cbd1c0019136900694a0d2347b5ea970cb160259ded59d10b6b62595
-  category: main
-  optional: false
-- name: scipy
-  version: 1.16.3
-  manager: conda
-  platform: linux-64
-  dependencies:
-    __glibc: '>=2.17,<3.0.a0'
-    libblas: '>=3.9.0,<4.0a0'
-    libcblas: '>=3.9.0,<4.0a0'
-    libgcc: '>=14'
-    libgfortran: ''
-    libgfortran5: '>=14.3.0'
-    liblapack: '>=3.9.0,<4.0a0'
-    libstdcxx: '>=14'
-    numpy: '>=1.25.2'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-  url: https://conda.anaconda.org/conda-forge/linux-64/scipy-1.16.3-py313h11c21cd_1.conda
-  hash:
-    md5: 26b089b9e5fcdcdca714b01f8008d808
-    sha256: 901d040d684202b73ea55b10a6994ba7fdc9b332764d50e3c29c3e1f542c9330
   category: main
   optional: false
 - name: scipy
@@ -13514,68 +13359,6 @@ package:
   hash:
     md5: f2a7882ef9116c62439b6756d0f3355d
     sha256: bf80db1eaaa2e7c65b1aa5cce12ca605ec4cb6763a7eb0643bd2a2b960d2df28
-  category: main
-  optional: false
-- name: scipy
-  version: 1.16.3
-  manager: conda
-  platform: osx-64
-  dependencies:
-    __osx: '>=10.13'
-    libblas: '>=3.9.0,<4.0a0'
-    libcblas: '>=3.9.0,<4.0a0'
-    libcxx: '>=19'
-    libgfortran: ''
-    libgfortran5: '>=15.2.0'
-    liblapack: '>=3.9.0,<4.0a0'
-    numpy: '>=1.25.2'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-  url: https://conda.anaconda.org/conda-forge/osx-64/scipy-1.16.3-py313h61f8160_1.conda
-  hash:
-    md5: 00a86d1ffe414227daefd6dc5e381b16
-    sha256: 62d261298948c01e6944efe81183fd9674f65108216cab8fe9b3bba1f37282aa
-  category: main
-  optional: false
-- name: scipy
-  version: 1.16.3
-  manager: conda
-  platform: osx-arm64
-  dependencies:
-    __osx: '>=11.0'
-    libblas: '>=3.9.0,<4.0a0'
-    libcblas: '>=3.9.0,<4.0a0'
-    libcxx: '>=19'
-    libgfortran: ''
-    libgfortran5: '>=15.2.0'
-    liblapack: '>=3.9.0,<4.0a0'
-    numpy: '>=1.25.2'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-  url: https://conda.anaconda.org/conda-forge/osx-arm64/scipy-1.16.3-py313h0d10b07_1.conda
-  hash:
-    md5: 55c947938346fb644c2752383c40f935
-    sha256: 8d3a1018a7c6ab1e64904114a6b20fa72dd4ec384ea7c103e65f1c16a5518da2
-  category: main
-  optional: false
-- name: scipy
-  version: 1.16.3
-  manager: conda
-  platform: win-64
-  dependencies:
-    libblas: '>=3.9.0,<4.0a0'
-    libcblas: '>=3.9.0,<4.0a0'
-    liblapack: '>=3.9.0,<4.0a0'
-    numpy: '>=1.25.2'
-    python: '>=3.13,<3.14.0a0'
-    python_abi: 3.13.*
-    ucrt: '>=10.0.20348.0'
-    vc: '>=14.3,<15'
-    vc14_runtime: '>=14.44.35208'
-  url: https://conda.anaconda.org/conda-forge/win-64/scipy-1.16.3-py313h7aa983e_1.conda
-  hash:
-    md5: 48d61880bb8683809f29d7ce8ab6574f
-    sha256: 247ed8e9d00bb2342f84011fb9455d2339d509e4ade9b8e7d35b07b586ef09fe
   category: main
   optional: false
 - name: secretstorage
@@ -14279,55 +14062,7 @@ package:
 - name: threadpoolctl
   version: 3.6.0
   manager: conda
-  platform: linux-64
-  dependencies:
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
-  hash:
-    md5: 9d64911b31d57ca443e9f1e36b04385f
-    sha256: 6016672e0e72c4cf23c0cf7b1986283bd86a9c17e8d319212d78d8e9ae42fdfd
-  category: main
-  optional: false
-- name: threadpoolctl
-  version: 3.6.0
-  manager: conda
   platform: linux-aarch64
-  dependencies:
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
-  hash:
-    md5: 9d64911b31d57ca443e9f1e36b04385f
-    sha256: 6016672e0e72c4cf23c0cf7b1986283bd86a9c17e8d319212d78d8e9ae42fdfd
-  category: main
-  optional: false
-- name: threadpoolctl
-  version: 3.6.0
-  manager: conda
-  platform: osx-64
-  dependencies:
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
-  hash:
-    md5: 9d64911b31d57ca443e9f1e36b04385f
-    sha256: 6016672e0e72c4cf23c0cf7b1986283bd86a9c17e8d319212d78d8e9ae42fdfd
-  category: main
-  optional: false
-- name: threadpoolctl
-  version: 3.6.0
-  manager: conda
-  platform: osx-arm64
-  dependencies:
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
-  hash:
-    md5: 9d64911b31d57ca443e9f1e36b04385f
-    sha256: 6016672e0e72c4cf23c0cf7b1986283bd86a9c17e8d319212d78d8e9ae42fdfd
-  category: main
-  optional: false
-- name: threadpoolctl
-  version: 3.6.0
-  manager: conda
-  platform: win-64
   dependencies:
     python: '>=3.9'
   url: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
@@ -15200,63 +14935,7 @@ package:
 - name: ucimlrepo
   version: 0.0.7
   manager: conda
-  platform: linux-64
-  dependencies:
-    certifi: '>=2020.12.5'
-    pandas: '>=1.0.0'
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/ucimlrepo-0.0.7-pyhd8ed1ab_1.conda
-  hash:
-    md5: 4a93353fb5cf32875e79a632ca3fe905
-    sha256: cc3595c8e8812b20fd75a905ccb8e3a748c94964dca046fbdce6c2df865ead82
-  category: main
-  optional: false
-- name: ucimlrepo
-  version: 0.0.7
-  manager: conda
   platform: linux-aarch64
-  dependencies:
-    certifi: '>=2020.12.5'
-    pandas: '>=1.0.0'
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/ucimlrepo-0.0.7-pyhd8ed1ab_1.conda
-  hash:
-    md5: 4a93353fb5cf32875e79a632ca3fe905
-    sha256: cc3595c8e8812b20fd75a905ccb8e3a748c94964dca046fbdce6c2df865ead82
-  category: main
-  optional: false
-- name: ucimlrepo
-  version: 0.0.7
-  manager: conda
-  platform: osx-64
-  dependencies:
-    certifi: '>=2020.12.5'
-    pandas: '>=1.0.0'
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/ucimlrepo-0.0.7-pyhd8ed1ab_1.conda
-  hash:
-    md5: 4a93353fb5cf32875e79a632ca3fe905
-    sha256: cc3595c8e8812b20fd75a905ccb8e3a748c94964dca046fbdce6c2df865ead82
-  category: main
-  optional: false
-- name: ucimlrepo
-  version: 0.0.7
-  manager: conda
-  platform: osx-arm64
-  dependencies:
-    certifi: '>=2020.12.5'
-    pandas: '>=1.0.0'
-    python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/ucimlrepo-0.0.7-pyhd8ed1ab_1.conda
-  hash:
-    md5: 4a93353fb5cf32875e79a632ca3fe905
-    sha256: cc3595c8e8812b20fd75a905ccb8e3a748c94964dca046fbdce6c2df865ead82
-  category: main
-  optional: false
-- name: ucimlrepo
-  version: 0.0.7
-  manager: conda
-  platform: win-64
   dependencies:
     certifi: '>=2020.12.5'
     pandas: '>=1.0.0'
@@ -16224,59 +15903,7 @@ package:
 - name: altair-ally
   version: 0.1.1
   manager: pip
-  platform: linux-64
-  dependencies:
-    altair: '*'
-    pandas: '*'
-    vega-datasets: '*'
-  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
-  hash:
-    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
-  category: main
-  optional: false
-- name: altair-ally
-  version: 0.1.1
-  manager: pip
   platform: linux-aarch64
-  dependencies:
-    altair: '*'
-    pandas: '*'
-    vega-datasets: '*'
-  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
-  hash:
-    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
-  category: main
-  optional: false
-- name: altair-ally
-  version: 0.1.1
-  manager: pip
-  platform: osx-64
-  dependencies:
-    altair: '*'
-    pandas: '*'
-    vega-datasets: '*'
-  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
-  hash:
-    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
-  category: main
-  optional: false
-- name: altair-ally
-  version: 0.1.1
-  manager: pip
-  platform: osx-arm64
-  dependencies:
-    altair: '*'
-    pandas: '*'
-    vega-datasets: '*'
-  url: https://files.pythonhosted.org/packages/ca/b3/df528cb8c8242485b7f5d4d973fea5233b216486b3e1d2d8b14d92772ddf/altair_ally-0.1.1.tar.gz
-  hash:
-    sha256: f8b7179fda6335322048f71ec29b827b63f658e8a9fb54426927597eeb1f446e
-  category: main
-  optional: false
-- name: altair-ally
-  version: 0.1.1
-  manager: pip
-  platform: win-64
   dependencies:
     altair: '*'
     pandas: '*'
@@ -16839,6 +16466,46 @@ package:
   url: https://files.pythonhosted.org/packages/25/22/f48bd3af0ef7c72dce13f9930a4483acbc7c77373834700296495ea0875f/ipywidgets-7.8.5-py2.py3-none-any.whl
   hash:
     sha256: 8055fe314edd4c101a5f1ea230620ef5e315b0ca87f940264b4eac1faf9746ef
+  category: main
+  optional: false
+- name: joblib
+  version: 1.5.2
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl
+  hash:
+    sha256: 4e1f0bdbb987e6d843c70cf43714cb276623def372df3c22fe5266b2670bc241
+  category: main
+  optional: false
+- name: joblib
+  version: 1.5.2
+  manager: pip
+  platform: osx-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl
+  hash:
+    sha256: 4e1f0bdbb987e6d843c70cf43714cb276623def372df3c22fe5266b2670bc241
+  category: main
+  optional: false
+- name: joblib
+  version: 1.5.2
+  manager: pip
+  platform: osx-arm64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl
+  hash:
+    sha256: 4e1f0bdbb987e6d843c70cf43714cb276623def372df3c22fe5266b2670bc241
+  category: main
+  optional: false
+- name: joblib
+  version: 1.5.2
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/1e/e8/685f47e0d754320684db4425a0967f7d3fa70126bffd76110b7009a0090f/joblib-1.5.2-py3-none-any.whl
+  hash:
+    sha256: 4e1f0bdbb987e6d843c70cf43714cb276623def372df3c22fe5266b2670bc241
   category: main
   optional: false
 - name: jsonpickle
@@ -17772,6 +17439,46 @@ package:
     sha256: 2260efdc1ef89f39c670a0bd8151b1d0843567781bcafec6cda0534eb47a94f6
   category: main
   optional: false
+- name: threadpoolctl
+  version: 3.6.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl
+  hash:
+    sha256: 43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb
+  category: main
+  optional: false
+- name: threadpoolctl
+  version: 3.6.0
+  manager: pip
+  platform: osx-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl
+  hash:
+    sha256: 43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb
+  category: main
+  optional: false
+- name: threadpoolctl
+  version: 3.6.0
+  manager: pip
+  platform: osx-arm64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl
+  hash:
+    sha256: 43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb
+  category: main
+  optional: false
+- name: threadpoolctl
+  version: 3.6.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl
+  hash:
+    sha256: 43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb
+  category: main
+  optional: false
 - name: tinycss2
   version: 1.4.0
   manager: pip
@@ -17881,51 +17588,7 @@ package:
 - name: vega-datasets
   version: 0.9.0
   manager: pip
-  platform: linux-64
-  dependencies:
-    pandas: '*'
-  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
-  hash:
-    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
-  category: main
-  optional: false
-- name: vega-datasets
-  version: 0.9.0
-  manager: pip
   platform: linux-aarch64
-  dependencies:
-    pandas: '*'
-  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
-  hash:
-    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
-  category: main
-  optional: false
-- name: vega-datasets
-  version: 0.9.0
-  manager: pip
-  platform: osx-64
-  dependencies:
-    pandas: '*'
-  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
-  hash:
-    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
-  category: main
-  optional: false
-- name: vega-datasets
-  version: 0.9.0
-  manager: pip
-  platform: osx-arm64
-  dependencies:
-    pandas: '*'
-  url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
-  hash:
-    sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
-  category: main
-  optional: false
-- name: vega-datasets
-  version: 0.9.0
-  manager: pip
-  platform: win-64
   dependencies:
     pandas: '*'
   url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl

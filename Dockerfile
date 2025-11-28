@@ -6,7 +6,7 @@ COPY conda-lock.yml conda-lock.yml
 
 # setup conda-lock
 RUN conda install -n base -c conda-forge conda-lock -y
-RUN conda install -n base -c conda-forge setuptools -y
+
 # install packages from lockfile into term-deposit-predictor environment
 RUN conda-lock install -n term-deposit-predictor conda-lock.yml
 
