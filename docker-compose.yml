@@ -1,6 +1,6 @@
 services:
   proj-522:
-    image: charlene1010/term-deposit-predictor:d5c604917cead44284aae291ff8befd6ad7d8aee
+    image: charlene1010/term-deposit-predictor:cc74da912ea616946f1047311f2d2eee060fd7c5
     container_name: proj-522
     ports:
       - "8888:8888"
