@@ -1,10 +1,10 @@
 services:
   proj-522:
-    image: charlene1010/proj-522:latest
+    image: charlene1010/term-deposit-predictor:5e8e940bae709b44b081fe54c3230df4cf8a1239
     container_name: proj-522
     ports:
       - "8888:8888"
     volumes:
-      - ./:/home/jovyan/work
+      - ./:/workplace  # Changed from /home/jovyan/work
     stdin_open: true
     tty: true

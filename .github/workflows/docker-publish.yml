@@ -1,44 +1,111 @@
-name: Publish Docker image
+name: Update Lock Files and Build Docker Image
 
 on:
-  workflow_dispatch:
   push:
+    # trigger when any one of these files have been changed
     paths:
+      - 'environment.yml'
       - 'Dockerfile'
-      - 'conda-lock.yml'  # Changed from conda-linux-64.lock
+      - 'conda-lock.yml'
+      - '.github/workflows/docker-publish.yml'
+  # also allow manual trigger
+  workflow_dispatch:
 
 jobs:
-  push_to_registry:
+  update-lock-file:
+    runs-on: ubuntu-latest
+    outputs:
+      lock-file-updated: ${{ steps.check-changes.outputs.changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # use a different environment name, base is a reserved environment name
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          # change this python version to match project python version
+          python-version: '3.11'
+          activate-environment: dockerlock
+          conda-remove-defaults: true
+
+      - name: Install conda-lock
+        shell: "bash -l {0}"
+        run: conda install -y -c conda-forge conda-lock
+
+      - name: Run conda-lock
+        shell: "bash -l {0}"
+        run: make cl
+
+      # checks if the conda-lock.yml file has any changes
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet conda-lock.yml; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # if the conda-lock.yml file has changed, push the changes to the repo
+      - name: Commit and push lock file
+        if: steps.check-changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_ACTIONS_PAT }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add conda-lock.yml
+          git commit -m ":wrench: Update conda-lock.yml"
+          git push origin ${{ github.ref_name }}
+
+  build-and-push-docker:
+    needs: update-lock-file
+    if: always() && needs.update-lock-file.result != 'failure'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repo
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
+
+      - name: Pull latest changes
+        run: git pull origin ${{ github.ref_name }}
+
+      # set up docker so it can build multiple architectures
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # log into docker hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Sanitize ref name
+        id: sanitize
+        run: |
+          echo "SANITIZED_REF=$(echo ${GITHUB_REF##*/} | tr '/' '-' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_.-]/-/g')" >> $GITHUB_OUTPUT
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: charlene1010/proj-522
-          tags: |
-            type=raw,value={{sha}},enable=${{ github.ref_type != 'tag' }}
-            type=raw,value=latest
-
+      # build and push the container
+      # build intel + arm containers
+      # push the container to docker hub (under the dockerhub username)
+      # tag the container as latest, current github hash, and branch name
+      # use the hash version for fixed container version
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
-          push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:latest
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.sanitize.outputs.SANITIZED_REF }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:buildcache,mode=max
