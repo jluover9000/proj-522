@@ -1,15 +1,17 @@
 name: dockerlock
 channels:
-- conda-forge
+  - conda-forge
 dependencies:
-- altair
-- conda-lock=>3.0.4
-- jupyterlab
-- pandas
-- pandera
-- pip
-- pointblank
-- python
-- pip:
-  - deepchecks
-  - vegafusion
+  - altair
+  - conda-lock>=3.0.4  # Fixed: use >= instead of =>
+  - jupyterlab
+  - pandas>=2.0  # Fixed: pandas is currently at 2.x, not 3.x
+  - pandera
+  - pip
+  - ucimlrepo
+  - pointblank
+  - python>=3.10  # Specify Python version
+  - pip:
+    - deepchecks
+    - vegafusion
+    - altair_ally>=0.1.1
