@@ -12,7 +12,7 @@ dependencies:
   - pointblank
   - python>=3.10  # Specify Python version
   - vl-convert-python>=1.8.0
-  - pyarrow >= 14.0.0
+  - pyarrow>=14.0.0
   - pip:
     - deepchecks
     - vegafusion
