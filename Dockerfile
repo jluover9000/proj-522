@@ -7,14 +7,14 @@ COPY conda-lock.yml conda-lock.yml
 # setup conda-lock
 RUN conda install -n base -c conda-forge conda-lock -y
 
-# install packages from lockfile into dockerlock environment
+# install packages from lockfile into term-deposit-predictor environment
 RUN conda-lock install -n term-deposit-predictor conda-lock.yml
 
-# make dockerlock the default environment
+# make term-deposit-predictor the default environment
 RUN echo "source /opt/conda/etc/profile.d/conda.sh && conda activate term-deposit-predictor" >> ~/.bashrc
 
 # set the default shell to use bash with login to pick up bashrc
-# this ensures that we are starting from an activated dockerlock environment
+# this ensures that we are starting from an activated term-deposit-predictor environment
 SHELL ["/bin/bash", "-l", "-c"]
 
 # expose JupyterLab port
