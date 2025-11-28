@@ -53,7 +53,7 @@ jobs:
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
             ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:main \
-            conda run --no-capture-output -n dockerlock \
+            conda run --no-capture-output -n term-deposit-predictor \
             jupyter nbconvert --to notebook --execute analysis.ipynb --output analysis-output.ipynb
 
       - name: Upload analysis results
