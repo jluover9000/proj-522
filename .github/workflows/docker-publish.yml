@@ -104,8 +104,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:latest
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ steps.sanitize.outputs.SANITIZED_REF }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache,mode=max
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:latest
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:${{ steps.sanitize.outputs.SANITIZED_REF }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/term-deposit-predictor:buildcache,mode=max
