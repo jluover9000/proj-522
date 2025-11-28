@@ -32,6 +32,11 @@ To shut down the container and clean up the resources,
 type `Cntrl` + `C` in the terminal
 where you launched the container, and then type `docker compose rm`
 
+# Developer
+1. After editing `environment.yml`
+2. Run `rm conda-lock.yml` then enter `y`
+3. Run `conda-lock lock --platform linux-64 --platform linux-aarch64 --file environment.yml`
+   
 # Dependencies 
   - `python>=3.10`
   - `pandas==2.1.4`
