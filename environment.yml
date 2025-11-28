@@ -1,20 +1,15 @@
-name: term-deposit-predictor
+name: dockerlock
 channels:
-  - conda-forge
+- conda-forge
 dependencies:
-  - python>=3.10
-  - conda-lock
-  - pandas==2.1.4
-  - altair>=5.2
-  - ipykernel
-  - pip
-  - ucimlrepo
-  - scikit-learn>=1.3.2
-  - vl-convert-python>=1.8.0
-  - requests>=2.31.0
-  - notebook>=6.5.4
-  - pyarrow>=14.0.0
-  - pip:
-    - altair_ally>=0.1.1
-    - vegafusion>=2.0.3
-    - deepchecks==0.18.1
+- altair
+- conda-lock=>3.0.4
+- jupyterlab
+- pandas
+- pandera
+- pip
+- pointblank
+- python
+- pip:
+  - deepchecks
+  - vegafusion
