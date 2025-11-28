@@ -86,6 +86,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Sanitize ref name
+        id: sanitize
+        run: |
+          echo "SANITIZED_REF=$(echo ${GITHUB_REF##*/} | tr '/' '-' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_.-]/-/g')" >> $GITHUB_OUTPUT
 
       # build and push the container
       # build intel + arm containers
@@ -100,6 +105,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:latest
-
+            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:${{ steps.sanitize.outputs.SANITIZED_REF }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/docker-condalock-jupyterlab:buildcache,mode=max
