@@ -1,0 +1,9 @@
+,mean,std
+fit_time,0.089,0.003
+score_time,0.022,0.001
+test_accuracy,0.846,0.006
+train_accuracy,0.847,0.003
+test_f1,0.555,0.014
+train_f1,0.557,0.005
+test_roc_auc,0.911,0.009
+train_roc_auc,0.912,0.002
