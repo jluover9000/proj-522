@@ -76,14 +76,14 @@ def main(input_dir, output_dir):
     # Generate distribution plots
     print("\nGenerating feature distribution plots...")
     dist_chart = ally.dist(train_df, color="y")
-    dist_file = os.path.join(output_dir, "feature_distributions.html")
+    dist_file = os.path.join(output_dir, "feature_distributions.png")
     dist_chart.save(dist_file)
     print(f"  Saved: {dist_file}")
 
     # Generate correlation matrix
     print("\nGenerating correlation matrix...")
     corr_chart = ally.corr(train_df)
-    corr_file = os.path.join(output_dir, "feature_correlations.html")
+    corr_file = os.path.join(output_dir, "feature_correlations.png")
     corr_chart.save(corr_file)
     print(f"  Saved: {corr_file}")
 
