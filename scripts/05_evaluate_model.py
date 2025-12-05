@@ -69,7 +69,7 @@ def main(test_dir, model_dir, output_dir):
 
     # Load test data
     print(f"Loading test data from {test_dir}...")
-    X_test = pd.read_csv(os.path.join(test_dir, "X_test.csv"))
+    X_test = pd.read_csv(os.path.join(test_dir, "X_test_transformed.csv"))
     y_test = pd.read_csv(os.path.join(test_dir, "y_test.csv"))
 
     print(f"  Test set size: {X_test.shape}")
