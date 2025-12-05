@@ -50,7 +50,7 @@ where you launched the container, and then type `docker compose rm`
 
 ``` bash
 # Remove all generated data and results
-rm -rf data/raw data/processed results
+make clean
 ```
 
 # Developer
