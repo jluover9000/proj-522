@@ -47,6 +47,6 @@ stop: ## stop docker-compose services
 	docker-compose stop
 
 .PHONY: clean
+
 clean: ## remove all generated data and results
-    rm -rf data/raw data/processed results
-    mkdir -p data/raw data/processed results/models results/figures
+	rm -rf data/raw data/processed results
