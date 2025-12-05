@@ -22,6 +22,7 @@ from sklearn.impute import SimpleImputer
 import json
 import pickle
 
+
 @click.command()
 @click.option(
     "--input-dir",
@@ -86,11 +87,11 @@ def main(input_dir, output_dir, test_size, random_state):
     )
 
     print(f"  Training set size: {X_train.shape}")
-    print(f"  Test set size: {X_test.shape}")  
+    print(f"  Test set size: {X_test.shape}")
 
-    # Save processed data
+    # Save unprocessed data for eda
     # print(f"\nSaving processed data to {output_dir}...")
-    # X_train.to_csv(os.path.join(output_dir, "X_train.csv"), index=False)
+    X_train.to_csv(os.path.join(output_dir, "X_train_unprocessed.csv"), index=False)
     # X_test.to_csv(os.path.join(output_dir, "X_test.csv"), index=False)
     # y_train.to_csv(os.path.join(output_dir, "y_train.csv"), index=False)
     # y_test.to_csv(os.path.join(output_dir, "y_test.csv"), index=False)
@@ -121,14 +122,14 @@ def main(input_dir, output_dir, test_size, random_state):
 
     print("\nDEBUG categorical_columns =", categorical_columns)
     print("DEBUG numerical_columns =", numerical_columns)
-    
+
     # Combine preprocessing steps
     preprocessor = ColumnTransformer(
         transformers=[
             ("num", numeric_pipeline, numerical_columns),
             ("cat", categorical_pipeline, categorical_columns),
         ],
-        sparse_threshold=0  # Force dense output
+        sparse_threshold=0,  # Force dense output
     )
 
     # Fit on training data
@@ -141,7 +142,7 @@ def main(input_dir, output_dir, test_size, random_state):
     X_test_t = preprocessor.transform(X_test)
 
     print("\nDEBUG transformed shape =", X_train_t.shape)
-    
+
     # Build feature names
     cat_encoder = preprocessor.named_transformers_["cat"].named_steps["onehotencoder"]
     categorical_feature_names = cat_encoder.get_feature_names_out(categorical_columns)
@@ -178,6 +179,7 @@ def main(input_dir, output_dir, test_size, random_state):
         )
     print(f"Saved preprocessing metadata → {metadata_path}")
     print("\n✓ Data preprocessing complete!")
-    
+
+
 if __name__ == "__main__":
     main()

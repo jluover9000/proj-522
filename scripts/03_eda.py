@@ -62,7 +62,7 @@ def main(input_dir, output_dir):
 
     # Load training data
     print(f"Loading training data from {input_dir}...")
-    X_train = pd.read_csv(os.path.join(input_dir, "X_train.csv"))
+    X_train = pd.read_csv(os.path.join(input_dir, "X_train_unprocessed.csv"))
     y_train = pd.read_csv(os.path.join(input_dir, "y_train.csv"))
 
     # Combine features and target
