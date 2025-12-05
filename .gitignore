@@ -14,3 +14,18 @@ tests/__pycache__
 
 **.cache/
 **.conda/
+
+# Ignore all files in data directories except .gitkeep
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Ignore all files in results directories except .gitkeep
+results/models/*
+!results/models/.gitkeep
+results/figures/*
+!results/figures/.gitkeep
+results/*.csv
+results/*.html
+results/*.png
