@@ -2,17 +2,15 @@
 On this project we are predicting whether clients will subscribe to a term deposit using the Bank Marketing dataset. A logistic regression model was developed, incorporating all available predictor variables after appropriate preprocessing. The model was evaluated using shuffled cross-validation with an emphasis on the F1 score balance precision and recall. The analysis was conducted using Python and key libraries such as NumPy, pandas, and scikit-learn, with all code documented for reproducibility.
 
 Our final classifier performed fairly well on an unseen test data set, achieving an accuracy of 0.844, f1-score of 0.551, and roc-auc score of 0.91. This indicates that the model is reasonably effective at identifying clients who will subscribe to a term deposit, although there is room for improvement, particularly in recall. Further refinements could involve exploring additional features, tuning hyperparameters, or experimenting with alternative modeling techniques to enhance predictive performance.
-# List of author
+# List of Authors
 - Charlene Chin
 - Daniel Yorke 
 - Jackson Lu
 - Mohammed Ibrahim
 
 # Report
-
 The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
-
 # Usage
 1. First time running the project,
 run the following from the root of this repository:
@@ -29,20 +27,24 @@ docker compose exec proj-522 bash
 ``` bash
 # Step 1: Download data
 python scripts/01_download_data.py --dataset-id=222 --output-dir=data/raw
-
+```
+``` bash
 # Step 2: Preprocess and split
 python scripts/02_clean_preprocess.py --input-dir=data/raw --output-dir=data/processed
-
+```
+``` bash
 # Step 3: EDA
 python scripts/03_eda.py --input-dir=data/processed --output-dir=results/figures
-
+```
+``` bash
 # Step 4: Train model
 python scripts/04_fit_model.py --input-dir=data/processed --output-dir=results/models
-
+```
+``` bash
 # Step 5: Evaluate
 python scripts/05_evaluate_model.py --test-dir=data/processed --model-dir=results/models --output-dir=results
 ```
-### Clean up
+## Cleaning
 
 To shut down the container and clean up the resources, 
 type `Cntrl` + `C` in the terminal
