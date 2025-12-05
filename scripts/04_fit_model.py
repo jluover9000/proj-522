@@ -23,6 +23,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 import warnings
+import json
 
 warnings.filterwarnings("ignore")
 
@@ -82,11 +83,14 @@ def main(input_dir, output_dir, cv_folds, random_state):
 
     print(f"  Training set size: {X_train.shape}")
 
-    # Identify column types
-    categorical_columns = X_train.select_dtypes(include=["object"]).columns.tolist()
-    numerical_columns = X_train.select_dtypes(
-        include=["int64", "float64"]
-    ).columns.tolist()
+    # Load column metadata created in script 02
+    print("\nLoading column metadata...")
+    metadata_path = os.path.join(input_dir, "column_info.json")
+    with open(metadata_path, "r") as f:
+        column_info = json.load(f)
+
+    categorical_columns = column_info["categorical_columns"]
+    numerical_columns = column_info["numerical_columns"]
 
     print(f"\nCategorical columns: {len(categorical_columns)}")
     print(f"Numerical columns: {len(numerical_columns)}")

@@ -7,13 +7,19 @@ Usage:
 This script:
 1. Loads raw features and targets
 2. Splits data into train and test sets (80/20, stratified)
-3. Saves processed datasets
+3. Creates preprocessing pipelines (definitions only – not fitted)
+4. Saves processed datasets
 """
 
 import os
 import click
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import make_pipeline
+from sklearn.impute import SimpleImputer
+import json
 
 
 @click.command()
@@ -80,7 +86,7 @@ def main(input_dir, output_dir, test_size, random_state):
     )
 
     print(f"  Training set size: {X_train.shape}")
-    print(f"  Test set size: {X_test.shape}")
+    print(f"  Test set size: {X_test.shape}")  
 
     # Save processed data
     print(f"\nSaving processed data to {output_dir}...")
@@ -96,8 +102,45 @@ def main(input_dir, output_dir, test_size, random_state):
     print("\nClass distribution in test set:")
     print(y_test["y"].value_counts(normalize=True))
 
-    print(f"\n✓ Data preprocessing complete!")
+    # Identify column types
+    categorical_columns = X_train.select_dtypes(include=["object"]).columns.tolist()
+    numerical_columns = X_train.select_dtypes(
+        include=["int64", "float64"]
+    ).columns.tolist()
 
+    print(f"\nCategorical columns: {len(categorical_columns)}")
+    print(f"Numerical columns: {len(numerical_columns)}")
+
+    # Create preprocessing pipelines
+    print("\nCreating preprocessing pipelines...")
+    numeric_pipeline = make_pipeline(SimpleImputer(strategy="median"), StandardScaler())
+
+    categorical_pipeline = make_pipeline(
+        SimpleImputer(strategy="constant", fill_value="unknown"),
+        OneHotEncoder(drop="first", handle_unknown="ignore"),
+    )
+
+    # Combine preprocessing steps
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", numeric_pipeline, numerical_columns),
+            ("cat", categorical_pipeline, categorical_columns),
+        ]
+    )
+    print(f"\n✓ Data preprocessing setup complete!")
+
+    # Save column lists (needed for script 04)
+    columns_file = os.path.join(output_dir, "column_info.json")
+    with open(columns_file, "w") as f:
+        json.dump(
+            {
+                "categorical_columns": categorical_columns,
+                "numerical_columns": numerical_columns,
+            },
+            f,
+            indent=4,
+        )
+    print(f"\nSaved preprocessing metadata → {columns_file}")
 
 if __name__ == "__main__":
     main()
