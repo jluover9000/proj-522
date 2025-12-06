@@ -30,7 +30,7 @@ python scripts/01_download_data.py --dataset-id=222 --output-dir=data/raw
 ```
 ``` bash
 # Step 2: Preprocess and split
-python scripts/02_clean_preprocess.py --input-dir=data/raw --output-dir=data/processed
+python scripts/02_clean_validate_preprocess.py --input-dir=data/raw --output-dir=data/processed
 ```
 ``` bash
 # Step 3: EDA
