@@ -1,14 +1,7 @@
 services:
   proj-522:
-    build:
-      context: .
-      dockerfile: Dockerfile  
-    image: charlene1010/term-deposit-predictor: 2e3c23d7eef1c412165a899d522b059f385577b6
+    image: charlene1010/term-deposit-predictor:2e3c23d7eef1c412165a899d522b059f385577b6
     container_name: proj-522
     ports:
       - "8888:8888"
-    volumes:
-      - ./:/workplace  # Changed from /home/jovyan/work
-    stdin_open: true
-    tty: true
-    platform: linux/amd64
+
