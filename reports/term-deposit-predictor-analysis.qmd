@@ -52,7 +52,7 @@ The dataset used in this project is the Bank Marketing dataset, created by Sérg
 
 The dataset contains 45,211 observations and 17 columns in total, comprising 16 predictor variables and 1 binary target variable (y) indicating whether the client subscribed to a term deposit. Each record represents a client who was contacted during a marketing campaign. The predictor variables capture a mix of demographic, financial, and campaign-related information. Among these, several features contain missing values (e.g., job, education, contact, and poutcome), requiring appropriate imputation or handling during preprocessing. Missing categorical values were imputed with a constant placeholder (“unknown”), and numerical features were standardized using StandardScaler to ensure comparability across variables. The target variable y is binary (yes or no), with only around 11–12% of the clients subscribing to a term deposit, resulting in a class imbalance that must be considered in model evaluation. Together, these attributes provide a rich and diverse feature set for assessing whether logistic regression can effectively capture the patterns associated with successful term-deposit subscriptions.
 
-This dataset is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+This dataset is licensed under a [Creative Commons Attribution 4.0 International (CC BY 4.0) license.](https://creativecommons.org/licenses/by/4.0/)
 
 ## Analysis
 
@@ -69,8 +69,7 @@ Correlation matrices (both Pearson and Spearman) were also examined to assess re
 
 Model evaluation was conducted using stratified 5-fold cross-validation to address class imbalance. Performance was primarily assessed using the F1-score, which balances precision and recall, along with accuracy and ROC-AUC for comprehensive evaluation. Across the five folds, the model achieved a mean accuracy of 0.844, a mean F1-score of 0.551, and a mean ROC-AUC of 0.910. Training and test results were closely aligned, indicating minimal overfitting. These results suggest that the logistic regression model provides strong discriminatory ability, though recall could be improved by further class rebalancing or feature engineering.
 
-All analysis was conducted in Python (Van Rossum & Drake, 2009) [@python] using NumPy [@numpy],
-pandas [@pandas], scikit-learn [@sklearn], Pandera (@Bantilan_2023) for data validation, Altair (@altair) for visualization, click to create all anlysis scripts (@click), and Quarto to render the report (@Allaire_Quarto_2022).
+All analysis was conducted in Python [@python] using NumPy [@numpy], pandas [@pandas], scikit-learn [@sklearn], Pandera (@Bantilan_2023) for data validation, Altair (@altair) for visualization, click (@click), and Quarto (@Allaire_Quarto_2022).
 
 
 # Results and Discussion
