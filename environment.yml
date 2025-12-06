@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - altair
+  - click
   - conda-lock>=3.0.4  # Fixed: use >= instead of =>
   - jupyterlab
   - pandas>=2.0  # Fixed: pandas is currently at 2.x, not 3.x
@@ -11,6 +12,7 @@ dependencies:
   - ucimlrepo
   - pointblank
   - python>=3.10  # Specify Python version
+  - scikit-learn
   - vl-convert-python>=1.8.0
   - pyarrow>=14.0.0
   - jupyter_contrib_nbextensions>=0.7.0

@@ -9,10 +9,8 @@ Our final classifier performed fairly well on an unseen test data set, achieving
 - Mohammed Ibrahim
 
 # Report
-
 The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
-
 # Usage
 1. First time running the project,
 run the following from the root of this repository:
@@ -20,17 +18,42 @@ run the following from the root of this repository:
 ``` bash
 docker compose up
 ```
-2. In the terminal, look for a URL that starts with `http://127.0.0.1:8888/lab?token=...`. Copy and paste that URL into your browser.
-
-3. To run the analysis,
-open `docs/term-deposit-predictor-analysis.ipynb` in Jupyter Lab you just launched
-and under the "Kernel" menu click "Restart Kernel and Run All Cells...".
-
-### Cleaning
+2. Open another terminal.
+``` bash
+# Access bash inside the container
+docker compose exec proj-522 bash
+```
+3. Run the following scripts in order.
+``` bash
+# Step 1: Download data
+python scripts/01_download_data.py --dataset-id=222 --output-dir=data/raw
+```
+``` bash
+# Step 2: Preprocess and split
+python scripts/02_clean_validate_preprocess.py --input-dir=data/raw --output-dir=data/processed
+```
+``` bash
+# Step 3: EDA
+python scripts/03_eda.py --input-dir=data/processed --output-dir=results/figures
+```
+``` bash
+# Step 4: Train model
+python scripts/04_fit_model.py --input-dir=data/processed --output-dir=results/models
+```
+``` bash
+# Step 5: Evaluate
+python scripts/05_evaluate_model.py --test-dir=data/processed --model-dir=results/models --output-dir=results
+```
+## Cleaning
 
 To shut down the container and clean up the resources, 
 type `Cntrl` + `C` in the terminal
 where you launched the container, and then type `docker compose rm`
+
+``` bash
+# Remove all generated data and results
+rm -rf data/raw data/processed results
+```
 
 # Developer
 1. After editing `environment.yml`

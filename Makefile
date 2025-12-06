@@ -45,3 +45,8 @@ up: ## stop and start docker-compose services
 .PHONY: stop
 stop: ## stop docker-compose services
 	docker-compose stop
+
+.PHONY: clean
+
+clean: ## remove all generated data and results
+	rm -rf data/raw data/processed results
