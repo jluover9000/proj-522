@@ -4,4 +4,5 @@ services:
     container_name: proj-522
     ports:
       - "8888:8888"
+    platform: linux/amd64
 
