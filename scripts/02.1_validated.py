@@ -370,6 +370,9 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     # -------------------------
     # TRAIN/TEST SPLIT
     # -------------------------
+    
+    # Split the data with stratification
+    # Stratify makes train and test sets have the same proportion of "yes" and "no"
     print(f"\nSplitting data (test_size={test_size}, random_state={random_state})...")
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state, stratify=y
@@ -378,12 +381,9 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     print(f"  Training set size: {X_train.shape}")
     print(f"  Test set size: {X_test.shape}")
 
-    # Save split data (untransformed)
-    print(f"\nSaving split data to {output_dir}...")
-    X_train.to_csv(os.path.join(output_dir, "X_train.csv"), index=False)
-    X_test.to_csv(os.path.join(output_dir, "X_test.csv"), index=False)
-    y_train.to_csv(os.path.join(output_dir, "y_train.csv"), index=False)
-    y_test.to_csv(os.path.join(output_dir, "y_test.csv"), index=False)
+    # Save unprocessed data for eda
+    print(f"\nSaving unprocessed training data to {output_dir}...")
+    X_train.to_csv(os.path.join(output_dir, "X_train_unprocessed.csv"), index=False)
 
     # Print class distribution
     print("\nClass distribution in training set:")
@@ -412,16 +412,13 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
         OneHotEncoder(drop="first", handle_unknown="ignore"),
     )
 
-    print("\nDEBUG categorical_columns =", categorical_columns)
-    print("DEBUG numerical_columns =", numerical_columns)
-    
     # Combine preprocessing steps
     preprocessor = ColumnTransformer(
         transformers=[
             ("num", numeric_pipeline, numerical_columns),
             ("cat", categorical_pipeline, categorical_columns),
         ],
-        sparse_threshold=0  # Force dense output
+        sparse_threshold=0,  # Force dense output
     )
 
     # Fit on training data
@@ -433,8 +430,6 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     X_train_t = preprocessor.transform(X_train)
     X_test_t = preprocessor.transform(X_test)
 
-    print("\nDEBUG transformed shape =", X_train_t.shape)
-    
     # Build feature names
     cat_encoder = preprocessor.named_transformers_["cat"].named_steps["onehotencoder"]
     categorical_feature_names = cat_encoder.get_feature_names_out(categorical_columns)
@@ -444,10 +439,15 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     X_train_df = pd.DataFrame(X_train_t, columns=feature_names)
     X_test_df = pd.DataFrame(X_test_t, columns=feature_names)
 
+    print(f"Transformed X_train dataframe shape: {X_train_df.shape}")
+    print(f"Transformed X_test dataframe shape: {X_test_df.shape}")
+
     # Save transformed datasets
     print("\nSaving transformed datasets...")
     X_train_df.to_csv(os.path.join(output_dir, "X_train_transformed.csv"), index=False)
     X_test_df.to_csv(os.path.join(output_dir, "X_test_transformed.csv"), index=False)
+    y_train.to_csv(os.path.join(output_dir, "y_train.csv"), index=False)
+    y_test.to_csv(os.path.join(output_dir, "y_test.csv"), index=False)
 
     # Save fitted preprocessor
     preprocessor_path = os.path.join(output_dir, "preprocessor.pkl")
@@ -469,6 +469,7 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
         )
     print(f"Saved preprocessing metadata → {metadata_path}")
     print("\n✓ Data preprocessing complete!")
-    
+
+
 if __name__ == "__main__":
     main()
