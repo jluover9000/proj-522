@@ -120,9 +120,6 @@ def main(input_dir, output_dir, test_size, random_state):
         OneHotEncoder(drop="first", handle_unknown="ignore"),
     )
 
-    print("\nDEBUG categorical_columns =", categorical_columns)
-    print("DEBUG numerical_columns =", numerical_columns)
-
     # Combine preprocessing steps
     preprocessor = ColumnTransformer(
         transformers=[
@@ -141,8 +138,6 @@ def main(input_dir, output_dir, test_size, random_state):
     X_train_t = preprocessor.transform(X_train)
     X_test_t = preprocessor.transform(X_test)
 
-    print("\nDEBUG transformed shape =", X_train_t.shape)
-
     # Build feature names
     cat_encoder = preprocessor.named_transformers_["cat"].named_steps["onehotencoder"]
     categorical_feature_names = cat_encoder.get_feature_names_out(categorical_columns)
@@ -151,6 +146,9 @@ def main(input_dir, output_dir, test_size, random_state):
     # Convert to DataFrames
     X_train_df = pd.DataFrame(X_train_t, columns=feature_names)
     X_test_df = pd.DataFrame(X_test_t, columns=feature_names)
+
+    print(f"Transformed X_train dataframe shape: {X_train_df.shape}")
+    print(f"Transformed X_test dataframe shape: {X_test_df.shape}")
 
     # Save transformed datasets
     print("\nSaving transformed datasets...")
