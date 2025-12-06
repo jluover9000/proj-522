@@ -13,6 +13,7 @@ dependencies:
   - python>=3.10  # Specify Python version
   - vl-convert-python>=1.8.0
   - pyarrow>=14.0.0
+  - jupyter_contrib_nbextensions>=0.7.0
   - ipykernel
   - nbconvert
   - nbclient
