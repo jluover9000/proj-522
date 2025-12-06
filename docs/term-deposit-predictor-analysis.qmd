@@ -1,0 +1,96 @@
+---
+title: "Term Deposit Predictor"
+author:
+  - "Jackson Lu"
+  - "Daniel Yorke"
+  - "Charlene Chin"
+  - "Mohammed Ibrahim"
+date: "2025-11-21"
+jupyter: python3
+format:
+  html:
+    toc: true       
+    toc-depth: 2
+    embed-resources: true
+  pdf:
+    toc: true
+    toc-depth: 3
+bibliography: references.bib
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+
+
+# Summary
+
+```{python}
+import pandas as pd
+
+metrics = pd.read_csv("../results/test_metrics.csv")
+
+accuracy = float(metrics.loc[metrics["Metric"] == "Accuracy", "Score"])
+f1 = float(metrics.loc[metrics["Metric"] == "F1 Score", "Score"])
+roc_auc = float(metrics.loc[metrics["Metric"] == "ROC-AUC", "Score"])
+```
+
+This project focuses on predicting whether clients will subscribe to a term deposit using the Bank Marketing dataset. A logistic regression model was developed, incorporating all available predictor variables after appropriate preprocessing. The model was evaluated using shuffled cross-validation with an emphasis on the F1 score balance precision and recall. The analysis was conducted using Python and key libraries such as NumPy, pandas, and scikit-learn, with all code documented for reproducibility.
+Our final classifier performed fairly well on an unseen test data set, achieving an accuracy of `{python} round(accuracy, 3)`, F1-score of `{python} round(f1, 3)`, and ROC-AUC score of `{python} round(roc_auc, 3)`. This indicates that the model is reasonably effective at identifying clients who will subscribe to a term deposit, although there is room for improvement, particularly in recall. Further refinements could involve exploring additional features, tuning hyperparameters, or experimenting with alternative modeling techniques to enhance predictive performance.
+
+# Introduction
+
+Financial institutions rely heavily on effective marketing strategies to identify which clients are most likely to subscribe to long-term financial products such as term deposits. These products support both customer financial planning and bank stability, yet subscription rates are often low due to ineffective targeting. Traditional marketing approaches depend heavily on human judgment, intuition, and repeated client contact, which can be costly, time-consuming, and inconsistent in effectiveness. As a result, developing more objective and data-driven methods for understanding and predicting client behaviour has become increasingly important.
+
+In this project, we ask whether a machine learning algorithm can accurately predict whether a bank client will subscribe to a term deposit based on demographic attributes, financial information, and past marketing interactions. This question is important because traditional marketing strategies tend to rely on broad outreach rather than individualized prediction, leading to inefficiencies and potential client fatigue. Furthermore, understanding which client characteristics are associated with subscription behavior may support more personalized communication strategies and improve customer experience. If a machine learning classifier such as logistic regression can reliably predict subscription outcomes, it may enable more data-driven, scalable, and cost-effective marketing decisions, ultimately improving the performance of future campaigns.
+
+# Methods 
+## Data
+
+The dataset used in this project is the Bank Marketing dataset, created by By Sérgio Moro, P. Cortez, P. Rita. in 2014 at the University of Minho in Portugal as part of a series of direct marketing campaigns conducted by a Portuguese banking institution. The data is publicly available through the UCI Machine Learning Repository and contains information on client demographics, financial status, and details related to previous marketing contacts. The dataset can be found [here](https://archive.ics.uci.edu/ml/datasets/bank+marketing).
+
+The dataset contains 45,211 observations and 17 columns in total, comprising 16 predictor variables and 1 binary target variable (y) indicating whether the client subscribed to a term deposit. Each record represents a client who was contacted during a marketing campaign. The predictor variables capture a mix of demographic, financial, and campaign-related information. Among these, several features contain missing values (e.g., job, education, contact, and poutcome), requiring appropriate imputation or handling during preprocessing. Missing categorical values were imputed with a constant placeholder (“unknown”), and numerical features were standardized using StandardScaler to ensure comparability across variables. The target variable y is binary (yes or no), with only around 11–12% of the clients subscribing to a term deposit, resulting in a class imbalance that must be considered in model evaluation. Together, these attributes provide a rich and diverse feature set for assessing whether logistic regression can effectively capture the patterns associated with successful term-deposit subscriptions.
+
+This dataset is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+
+## Analysis
+
+A logistic regression classifier was developed to model the probability that a client would subscribe to a term deposit (y). All predictor variables from the original dataset were included after appropriate preprocessing, which involved encoding categorical features with OneHotEncoder and scaling numerical features using StandardScaler. The dataset was randomly divided into a training set (80%) and a test set (20%) to enable unbiased performance evaluation.
+
+Prior exploratory analysis examined the distributions of all input variables in the training set, with plots colored by the binary outcome (“yes” or “no”). Most numerical predictors—such as previous, pdays, campaign, duration, age, and balance—displayed substantial overlap between the two classes. However, some features, particularly duration, showed clear differences: clients who subscribed tended to have significantly longer call durations. This observation is consistent with findings from the original dataset documentation, confirming duration as a strong predictor of subscription. Other variables, such as campaign, previous, and pdays, were highly right-skewed with long tails, while categorical variables (e.g., job, marital status, education, and contact type) appeared to carry complementary contextual information about clients. These exploratory patterns were visualized in @fig-feature-dist, which displays feature distributions by subscription status. @fig-feature-corr presents the correlation matrix among numerical predictors.
+
+![Feature distributions by subscription status in the training set.](../results/figures/feature_distributions.png){#fig-feature-dist width=70%}
+
+![Correlation matrix of numerical predictors in the training set.](../results/figures/feature_correlations.png){#fig-feature-corr width=70%}
+
+
+Correlation matrices (both Pearson and Spearman) were also examined to assess relationships among predictors. Overall, correlations between numerical features were weak, indicating low multicollinearity, which supports the use of logistic regression as an interpretable linear model. Some moderate associations were found among pdays, previous, and campaign, reflecting their shared connection to marketing contact history.
+
+Model evaluation was conducted using stratified 5-fold cross-validation to address class imbalance. Performance was primarily assessed using the F1-score, which balances precision and recall, along with accuracy and ROC-AUC for comprehensive evaluation. Across the five folds, the model achieved a mean accuracy of 0.844, a mean F1-score of 0.551, and a mean ROC-AUC of 0.910. Training and test results were closely aligned, indicating minimal overfitting. These results suggest that the logistic regression model provides strong discriminatory ability, though recall could be improved by further class rebalancing or feature engineering.
+
+All analysis was conducted in Python (Van Rossum & Drake, 2009) [@python] using NumPy [@numpy],
+pandas [@pandas], and scikit-learn [@sklearn], and Altair for visualization.
+
+
+# Results and Discussion
+```{python}
+#| label: tbl-test-metrics
+#| tbl-cap: "Test set performance metrics for the logistic regression model."
+
+import pandas as pd
+pd.read_csv("../results/test_metrics.csv")
+```
+
+The results demonstrate that logistic regression can effectively distinguish clients likely to subscribe to a term deposit, achieving strong performance across multiple evaluation metrics. The identification of duration as the most influential predictor aligns with expectations—longer calls typically indicate higher engagement and interest in the product. The moderate F1-score, however, reflects difficulty in recalling all positive cases, which was anticipated due to the dataset’s pronounced class imbalance (only around 11–12% subscribed).
+
+These findings highlight the model’s practical potential: banks could apply such a model to prioritize high-probability clients, improving campaign efficiency while reducing unnecessary contact costs. The high ROC-AUC value (0.91) suggests that even a simple, interpretable model can meaningfully support decision-making in marketing strategy.
+
+Future work could explore whether non-linear models (e.g., tree-based or ensemble methods) further improve recall, or whether feature engineering on time-related or interaction variables enhances predictive performance. In addition, investigating the relative influence of demographic versus campaign-related features could deepen understanding of what drives client subscription behavior.
+
+
+As shown in @tbl-test-metrics, the model performs effectively on the held-out test set.
+
+Our prediction model performed quite well on test data, with a final overall accuracy of 0.844 and F1 score of 0.551. The ROC-AUC score of 0.91 indicates that the model is effective at distinguishing between clients who will and will not subscribe to a term deposit. However, there is room for improvement in identifying all potential subscribers, as some were missed by the model.
+
+# References
