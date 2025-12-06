@@ -20,7 +20,7 @@ cl: ## create conda lock for multiple platforms
 		-p osx-64 \
 		-p osx-arm64 \
 		-p win-64 \
-		-p linux-aarch64
+
 
 .PHONY: env
 env: ## remove previous and create environment from lock file
