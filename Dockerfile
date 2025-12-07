@@ -18,7 +18,7 @@ RUN echo "source /opt/conda/etc/profile.d/conda.sh && conda activate term-deposi
 SHELL ["/bin/bash", "-l", "-c"]
 
 # Install TinyTeX for PDF rendering with Quarto
-RUN quarto install tinytex
+RUN conda run -n term-deposit-predictor quarto install tinytex
 
 # expose JupyterLab port
 EXPOSE 8888
