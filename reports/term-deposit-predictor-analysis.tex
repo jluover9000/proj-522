@@ -1,0 +1,473 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Term Deposit Predictor},
+  pdfauthor={Jackson Lu; Daniel Yorke; Charlene Chin; Mohammed Ibrahim},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Term Deposit Predictor}
+\author{Jackson Lu \and Daniel Yorke \and Charlene Chin \and Mohammed
+Ibrahim}
+\date{2025-11-21}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+
+\section{Summary}\label{summary}
+
+This project focuses on predicting whether clients will subscribe to a
+term deposit using the Bank Marketing dataset. A logistic regression
+model was developed, incorporating all available predictor variables
+after appropriate preprocessing. The model was evaluated using shuffled
+cross-validation with an emphasis on the F1 score balance precision and
+recall. The analysis was conducted using Python and key libraries such
+as NumPy, pandas, and scikit-learn, with all code documented for
+reproducibility. Our final classifier performed fairly well on an unseen
+test data set, achieving an accuracy of 0.839, an F1-score of 0.539, and
+an ROC-AUC score of 0.905. This indicates that the model is reasonably
+effective at identifying clients who will subscribe to a term deposit,
+although there is room for improvement, particularly in recall. Further
+refinements could involve exploring additional features, tuning
+hyperparameters, or experimenting with alternative modelling techniques
+to enhance predictive performance.
+
+\section{Introduction}\label{introduction}
+
+Financial institutions rely heavily on effective marketing strategies to
+identify which clients are most likely to subscribe to long-term
+financial products such as term deposits. These products support both
+customer financial planning and bank stability, yet subscription rates
+are often low due to ineffective targeting. Traditional marketing
+approaches depend heavily on human judgement, intuition, and repeated
+client contact, which can be costly, time-consuming, and inconsistent in
+effectiveness. As a result, developing more objective and data-driven
+methods for understanding and predicting client behaviour has become
+increasingly important.
+
+In this project, we ask whether a machine learning algorithm can
+accurately predict whether a bank client will subscribe to a term
+deposit based on demographic attributes, financial information, and past
+marketing interactions. This question is important because traditional
+marketing strategies tend to rely on broad outreach rather than
+individualized prediction, leading to inefficiencies and potential
+client fatigue. Furthermore, understanding which client characteristics
+are associated with subscription behaviour may support more personalized
+communication strategies and improve customer experience. If a machine
+learning classifier such as logistic regression can reliably predict
+subscription outcomes, it may enable more data-driven, scalable, and
+cost-effective marketing decisions, ultimately improving the performance
+of future campaigns.
+
+\section{Methods}\label{methods}
+
+\subsection{Data}\label{data}
+
+The dataset used in this project is the Bank Marketing dataset, created
+by Sérgio Moro, P. Cortez, and P. Rita in 2014 at the University of
+Minho in Portugal as part of a series of direct marketing campaigns
+conducted by a Portuguese banking institution (Moro and Cortez (2014)).
+The data is publicly available through the UCI Machine Learning
+Repository and contains information on client demographics, financial
+status, and details related to previous marketing contacts.
+
+The dataset contains 45,211 observations and 17 columns in total,
+comprising 16 predictor variables and 1 binary target variable (y)
+indicating whether the client subscribed to a term deposit. Each record
+represents a client who was contacted during a marketing campaign. The
+predictor variables capture a mix of demographic, financial, and
+campaign-related information. Among these, several features contain
+missing values (e.g., job, education, contact, and poutcome), requiring
+appropriate imputation or handling during preprocessing. Missing
+categorical values were imputed with a constant placeholder
+(``unknown''), and numerical features were standardized using
+StandardScaler to ensure comparability across variables. The target
+variable y is binary (yes or no), with only around 11--12\% of the
+clients subscribing to a term deposit, resulting in a class imbalance
+that must be considered in model evaluation. Together, these attributes
+provide a rich and diverse feature set for assessing whether logistic
+regression can effectively capture the patterns associated with
+successful term-deposit subscriptions.
+
+This dataset is licensed under a
+\href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons
+Attribution 4.0 International (CC BY 4.0) license.}
+
+\subsection{Analysis}\label{analysis}
+
+A logistic regression classifier was developed to model the probability
+that a client would subscribe to a term deposit (y). All predictor
+variables from the original dataset were included after appropriate
+preprocessing, which involved encoding categorical features with
+OneHotEncoder and scaling numerical features using StandardScaler. The
+dataset was randomly divided into a training set (80\%) and a test set
+(20\%) to enable unbiased performance evaluation.
+
+Prior exploratory analysis examined the distributions of all input
+variables in the training set, with plots coloured by the binary outcome
+(``yes'' or ``no''). Most numerical predictors---such as previous,
+pdays, campaign, duration, age, and balance---displayed substantial
+overlap between the two classes. However, some features, particularly
+duration, showed clear differences: clients who subscribed tended to
+have significantly longer call durations. This observation is consistent
+with findings from the original dataset documentation, confirming
+duration as a strong predictor of subscription. Other variables, such as
+campaign, previous, and pdays, were highly right-skewed with long tails,
+while categorical variables (e.g., job, marital status, education, and
+contact type) appeared to carry complementary contextual information
+about clients. These exploratory patterns were visualized in
+Figure~\ref{fig-feature-dist}, which displays feature distributions by
+subscription status. Figure~\ref{fig-feature-corr} presents the
+correlation matrix among numerical predictors.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{../results/figures/feature_distributions.png}
+
+}
+
+\caption{\label{fig-feature-dist}Feature distributions by subscription
+status in the training set.}
+
+\end{figure}%
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{../results/figures/feature_correlations.png}
+
+}
+
+\caption{\label{fig-feature-corr}Correlation matrix of numerical
+predictors in the training set.}
+
+\end{figure}%
+
+Correlation matrices (both Pearson and Spearman) were also examined to
+assess relationships among predictors. Overall, correlations between
+numerical features were weak, as shown in Figure~\ref{fig-feature-corr},
+indicating low multicollinearity, which supports the use of logistic
+regression as an interpretable linear model. Some moderate associations
+were found among pdays, previous, and campaign, reflecting their shared
+connection to marketing contact history.
+
+Model evaluation was conducted using stratified 5-fold cross-validation
+to address class imbalance. Performance was primarily assessed using the
+F1-score, which balances precision and recall, along with accuracy and
+ROC-AUC for comprehensive evaluation. Across the five folds, the model
+achieved a mean accuracy of 0.844, a mean F1-score of 0.551, and a mean
+ROC-AUC of 0.910. Training and test results were closely aligned,
+indicating minimal overfitting. These results suggest that the logistic
+regression model provides strong discriminatory ability, though recall
+could be improved by further class rebalancing or feature engineering.
+
+All analysis was conducted in Python (Rossum and Drake 2009) using NumPy
+(Harris et al. 2020), pandas (McKinney 2010), scikit-learn (Pedregosa et
+al. 2011), Pandera (Bantilan (2023)) for data validation, Altair
+(VanderPlas (2018)) for visualization, click (Team (2020)), and Quarto
+(Allaire et al. (2022)).
+
+\section{Results and Discussion}\label{results-and-discussion}
+
+\begin{longtable}[]{@{}lll@{}}
+
+\caption{\label{tbl-test-metrics}Test set performance metrics for the
+logistic regression model.}
+
+\tabularnewline
+
+\toprule\noalign{}
+& Metric & Score \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & Accuracy & 0.838549 \\
+1 & F1 Score & 0.538559 \\
+2 & ROC-AUC & 0.904861 \\
+
+\end{longtable}
+
+The results demonstrate that logistic regression can effectively
+distinguish clients likely to subscribe to a term deposit, achieving
+strong performance across multiple evaluation metrics. The
+identification of duration as the most influential predictor aligns with
+expectations---longer calls typically indicate higher engagement and
+interest in the product. The moderate F1 score, however, reflects
+difficulty in recalling all positive cases, which was anticipated due to
+the dataset's pronounced class imbalance (only around 11--12\%
+subscribed).
+
+These findings highlight the model's practical potential: banks could
+apply such a model to prioritize high-probability clients, improving
+campaign efficiency while reducing unnecessary contact costs. The high
+ROC-AUC value (0.91) suggests that even a simple, interpretable model
+can meaningfully support decision-making in marketing strategy.
+
+Future work could explore whether non-linear models (e.g., tree-based or
+ensemble methods) further improve recall or whether feature engineering
+on time-related or interaction variables enhances predictive
+performance. In addition, investigating the relative influence of
+demographic versus campaign-related features could deepen understanding
+of what drives client subscription behaviour.
+
+As shown in Table~\ref{tbl-test-metrics}, the model performs effectively
+on the held-out test set.
+
+Our prediction model performed quite well on test data, with a final
+overall accuracy of 0.844 and an F1 score of 0.551. The ROC-AUC score of
+0.91 indicates that the model is effective at distinguishing between
+clients who will and will not subscribe to a term deposit. However,
+there is room for improvement in identifying all potential subscribers,
+as some were missed by the model.
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-Allaire_Quarto_2022}
+Allaire, J. J., Charles Teague, Carlos Scheidegger, Yihui Xie, and
+Christophe Dervieux. 2022. {``{Quarto}.''}
+\url{https://doi.org/10.5281/zenodo.5960048}.
+
+\bibitem[\citeproctext]{ref-Bantilan_2023}
+Bantilan, Niels Haaland. 2023. {``Pandera: Going Beyond Pandas Data
+Validation.''} \emph{Proceedings of the 22nd Python in Science
+Conference}. \url{https://doi.org/10.25080/majora-21ff6573-01a}.
+
+\bibitem[\citeproctext]{ref-numpy}
+Harris, Charles R., K. Jarrod Millman, Stéfan van der Walt, et al. 2020.
+{``Array Programming with {NumPy}.''} \emph{Nature} 585: 357--62.
+\url{https://doi.org/10.1038/s41586-020-2649-2}.
+
+\bibitem[\citeproctext]{ref-pandas}
+McKinney, Wes. 2010. \emph{Pandas: Powerful Python Data Analysis
+Toolkit}. \url{https://pandas.pydata.org/}.
+
+\bibitem[\citeproctext]{ref-bank_marketing_222}
+Moro, Rita, S., and P. Cortez. 2014. {``{Bank Marketing}.''} UCI Machine
+Learning Repository.
+
+\bibitem[\citeproctext]{ref-sklearn}
+Pedregosa, Fabian, Gaël Varoquaux, Alexandre Gramfort, et al. 2011.
+{``Scikit-Learn: Machine Learning in Python.''} \emph{Journal of Machine
+Learning Research} 12: 2825--30.
+
+\bibitem[\citeproctext]{ref-python}
+Rossum, Guido van, and Fred L. Drake. 2009. \emph{Python Programming
+Language}. \url{https://www.python.org/}.
+
+\bibitem[\citeproctext]{ref-click}
+Team, Pallets. 2020. \emph{Click}.
+\url{https://click.palletsprojects.com/}.
+
+\bibitem[\citeproctext]{ref-altair}
+VanderPlas, Jake. 2018. {``Altair: Interactive Statistical
+Visualizations for Python.''} \emph{Journal of Open Source Software} 3
+(7825, 32): 1057. \url{https://doi.org/10.21105/joss.01057}.
+
+\end{CSLReferences}
+
+
+
+
+\end{document}
