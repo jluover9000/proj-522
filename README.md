@@ -11,19 +11,6 @@ Our final classifier performed fairly well on an unseen test data set, achieving
 # Report
 The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
-## Rendering the Report
-### Inside the Docker container:
-```bash
-quarto render docs/term-deposit-predictor-analysis.qmd --to html
-```
-### Rendering PDF
-```bash
-quarto render docs/term-deposit-predictor-analysis.qmd --to pdf
-```
-If you have not installed a TeX distribution:
-```bash
-quarto install tinytex
-```
 
 # Usage
 1. First time running the project,
@@ -57,6 +44,20 @@ python scripts/04_fit_model.py --input-dir=data/processed --output-dir=results/m
 ``` bash
 # Step 5: Evaluate
 python scripts/05_evaluate_model.py --test-dir=data/processed --model-dir=results/models --output-dir=results
+```
+## Rendering the Report
+### Inside the Docker container:
+```bash
+quarto render reports/term-deposit-predictor-analysis.qmd --to html
+```
+### Rendering PDF
+```bash
+quarto render reports/term-deposit-predictor-analysis.qmd --to pdf
+```
+#### Troubleshoot 
+If you have not installed a TeX distribution:
+```bash
+quarto install tinytex
 ```
 ## Cleaning
 
