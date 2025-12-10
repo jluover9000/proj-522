@@ -20,6 +20,7 @@ dependencies:
   - nbconvert
   - nbclient
   - quarto=1.8.26
+  - make=4.4.1
   - pip:
     - deepchecks
     - vegafusion
