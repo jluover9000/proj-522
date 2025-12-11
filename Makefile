@@ -15,6 +15,23 @@ cl: ## create conda lock for multiple platforms
 		-p osx-arm64 \
 		-p win-64 \
 
+.PHONY: docker-up docker-down docker-shell docker-build docker-up-shell
+docker-up: ## Start Docker container in detached mode
+	docker compose up -d
+
+docker-up-shell: ## Start container and open bash shell
+	docker compose up -d
+	docker compose exec proj-522 bash
+
+docker-down: ## Stop Docker container
+	docker compose down
+
+docker-shell: ## Open bash shell in running container
+	docker compose exec proj-522 bash
+
+docker-build: ## Build Docker image locally
+	docker compose build
+
 all: reports/term-deposit-predictor-analysis.html reports/term-deposit-predictor-analysis.pdf ## Run full analysis pipeline
 
 # Step 1: Download and extract data
@@ -65,9 +82,13 @@ results/figures/feature_distributions.png
 # Step 7: Generate PDF report
 reports/term-deposit-predictor-analysis.pdf: reports/term-deposit-predictor-analysis.qmd \
 results/test_metrics.csv \
-results/figures/feature_distributions.png
+results/figures/feature_distributions.png \
+results/classification_report.csv \
+results/confusion_matrix.csv \
+results/figures/feature_correlations.png \
+results/figures/summary_statistics.csv
 	quarto render reports/term-deposit-predictor-analysis.qmd --to pdf
-
+	
 .PHONY: clean
 clean: ## Remove all generated data and results
 	rm -rf data/raw data/processed results
