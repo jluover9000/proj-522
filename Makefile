@@ -21,6 +21,28 @@ cl: ## create conda lock for multiple platforms
 		-p osx-arm64 \
 		-p win-64 \
 
+<<<<<<< Updated upstream
+=======
+.PHONY: docker-up docker-down docker-shell docker-build docker-up-shell
+
+docker-up: ## Start Docker container in detached mode
+	docker compose up -d
+
+docker-up-shell: ## Start container and open bash shell
+	docker compose up -d
+	docker compose exec proj-522 bash
+
+docker-down: ## Stop Docker container
+	docker compose down
+
+docker-shell: ## Open bash shell in running container
+	docker compose exec proj-522 bash
+
+docker-build: ## Build Docker image locally
+	docker compose build
+
+all: reports/term-deposit-predictor-analysis.html reports/term-deposit-predictor-analysis.pdf ## Run full analysis pipeline
+>>>>>>> Stashed changes
 
 .PHONY: env
 env: ## remove previous and create environment from lock file
@@ -42,9 +64,37 @@ up: ## stop and start docker-compose services
 	make stop
 	docker-compose up -d
 
+<<<<<<< Updated upstream
 .PHONY: stop
 stop: ## stop docker-compose services
 	docker-compose stop
+=======
+# Step 5: Evaluate model
+results/test_metrics.csv results/classification_report.csv results/confusion_matrix.csv: data/processed/X_test_transformed.csv \
+data/processed/y_test.csv \
+results/models/logistic_regression_model.pkl \
+scripts/05_evaluate_model.py
+	python scripts/05_evaluate_model.py \
+		--test-dir=data/processed \
+		--model-dir=results/models \
+		--output-dir=results
+
+# Step 6: Generate HTML report
+reports/term-deposit-predictor-analysis.html: reports/term-deposit-predictor-analysis.qmd \
+results/test_metrics.csv \
+results/figures/feature_distributions.png
+	quarto render reports/term-deposit-predictor-analysis.qmd --to html
+
+# Step 7: Generate PDF report
+reports/term-deposit-predictor-analysis.pdf: reports/term-deposit-predictor-analysis.qmd \
+results/test_metrics.csv \
+results/figures/feature_distributions.png \
+results/classification_report.csv \
+results/confusion_matrix.csv \
+results/figures/feature_correlations.png \
+results/figures/summary_statistics.csv
+	quarto render reports/term-deposit-predictor-analysis.qmd --to pdf
+>>>>>>> Stashed changes
 
 .PHONY: clean
 
