@@ -15,8 +15,6 @@ cl: ## create conda lock for multiple platforms
 		-p osx-arm64 \
 		-p win-64 \
 
-.PHONY: all clean
-
 all: reports/term-deposit-predictor-analysis.html reports/term-deposit-predictor-analysis.pdf ## Run full analysis pipeline
 
 # Step 1: Download and extract data
