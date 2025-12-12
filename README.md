@@ -146,6 +146,10 @@ rm -rf data/raw data/processed results
   - `jupyterlab`
   - `nb_conda_kernels`
   - Python and packages listed in [`environment.yml`](environment.yml)
+
+# Contributions
+We welcome all suggestions and contributions to our project. Please view our contribution page to see detailed instructions [here](https://github.com/jluover9000/proj-522/tree/main?tab=contributing-ov-file#readme).
+
 # Licenses
 - MIT License
 - This dataset is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license.
