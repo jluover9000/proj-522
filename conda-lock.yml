@@ -5151,6 +5151,54 @@ package:
     sha256: acc1d991837c0afb67c75b77fdc72b4bf022aac71fedd8b9ea45918ac9b08a80
   category: main
   optional: false
+- name: iniconfig
+  version: 2.3.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9614359868482abba1bd15ce465e3c42
+    sha256: e1a9e3b1c8fe62dc3932a616c284b5d8cbe3124bbfbedcf4ce5c828cb166ee19
+  category: main
+  optional: false
+- name: iniconfig
+  version: 2.3.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9614359868482abba1bd15ce465e3c42
+    sha256: e1a9e3b1c8fe62dc3932a616c284b5d8cbe3124bbfbedcf4ce5c828cb166ee19
+  category: main
+  optional: false
+- name: iniconfig
+  version: 2.3.0
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9614359868482abba1bd15ce465e3c42
+    sha256: e1a9e3b1c8fe62dc3932a616c284b5d8cbe3124bbfbedcf4ce5c828cb166ee19
+  category: main
+  optional: false
+- name: iniconfig
+  version: 2.3.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.3.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 9614359868482abba1bd15ce465e3c42
+    sha256: e1a9e3b1c8fe62dc3932a616c284b5d8cbe3124bbfbedcf4ce5c828cb166ee19
+  category: main
+  optional: false
 - name: ipykernel
   version: 7.1.0
   manager: conda
@@ -12269,6 +12317,54 @@ package:
     sha256: 04c64fb78c520e5c396b6e07bc9082735a5cc28175dbe23138201d0a9441800b
   category: main
   optional: false
+- name: pluggy
+  version: 1.6.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
+  hash:
+    md5: d7585b6550ad04c8c5e21097ada2888e
+    sha256: e14aafa63efa0528ca99ba568eaf506eb55a0371d12e6250aaaa61718d2eb62e
+  category: main
+  optional: false
+- name: pluggy
+  version: 1.6.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
+  hash:
+    md5: d7585b6550ad04c8c5e21097ada2888e
+    sha256: e14aafa63efa0528ca99ba568eaf506eb55a0371d12e6250aaaa61718d2eb62e
+  category: main
+  optional: false
+- name: pluggy
+  version: 1.6.0
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
+  hash:
+    md5: d7585b6550ad04c8c5e21097ada2888e
+    sha256: e14aafa63efa0528ca99ba568eaf506eb55a0371d12e6250aaaa61718d2eb62e
+  category: main
+  optional: false
+- name: pluggy
+  version: 1.6.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.9'
+  url: https://conda.anaconda.org/conda-forge/noarch/pluggy-1.6.0-pyhf9edf01_1.conda
+  hash:
+    md5: d7585b6550ad04c8c5e21097ada2888e
+    sha256: e14aafa63efa0528ca99ba568eaf506eb55a0371d12e6250aaaa61718d2eb62e
+  category: main
+  optional: false
 - name: pointblank
   version: 0.17.0
   manager: conda
@@ -13185,6 +13281,82 @@ package:
   hash:
     md5: e2fd202833c4a981ce8a65974fe4abd1
     sha256: d016e04b0e12063fbee4a2d5fbb9b39a8d191b5a0042f0b8459188aedeabb0ca
+  category: main
+  optional: false
+- name: pytest
+  version: 9.0.2
+  manager: conda
+  platform: linux-64
+  dependencies:
+    colorama: '>=0.4'
+    exceptiongroup: '>=1'
+    iniconfig: '>=1.0.1'
+    packaging: '>=22'
+    pluggy: '>=1.5,<2'
+    pygments: '>=2.7.2'
+    python: ''
+    tomli: '>=1'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-9.0.2-pyhcf101f3_0.conda
+  hash:
+    md5: 2b694bad8a50dc2f712f5368de866480
+    sha256: 9e749fb465a8bedf0184d8b8996992a38de351f7c64e967031944978de03a520
+  category: main
+  optional: false
+- name: pytest
+  version: 9.0.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    colorama: '>=0.4'
+    exceptiongroup: '>=1'
+    iniconfig: '>=1.0.1'
+    packaging: '>=22'
+    pluggy: '>=1.5,<2'
+    pygments: '>=2.7.2'
+    python: '>=3.10'
+    tomli: '>=1'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-9.0.2-pyhcf101f3_0.conda
+  hash:
+    md5: 2b694bad8a50dc2f712f5368de866480
+    sha256: 9e749fb465a8bedf0184d8b8996992a38de351f7c64e967031944978de03a520
+  category: main
+  optional: false
+- name: pytest
+  version: 9.0.2
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    colorama: '>=0.4'
+    exceptiongroup: '>=1'
+    iniconfig: '>=1.0.1'
+    packaging: '>=22'
+    pluggy: '>=1.5,<2'
+    pygments: '>=2.7.2'
+    python: '>=3.10'
+    tomli: '>=1'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-9.0.2-pyhcf101f3_0.conda
+  hash:
+    md5: 2b694bad8a50dc2f712f5368de866480
+    sha256: 9e749fb465a8bedf0184d8b8996992a38de351f7c64e967031944978de03a520
+  category: main
+  optional: false
+- name: pytest
+  version: 9.0.2
+  manager: conda
+  platform: win-64
+  dependencies:
+    colorama: '>=0.4'
+    exceptiongroup: '>=1'
+    iniconfig: '>=1.0.1'
+    packaging: '>=22'
+    pluggy: '>=1.5,<2'
+    pygments: '>=2.7.2'
+    python: '>=3.10'
+    tomli: '>=1'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-9.0.2-pyhcf101f3_0.conda
+  hash:
+    md5: 2b694bad8a50dc2f712f5368de866480
+    sha256: 9e749fb465a8bedf0184d8b8996992a38de351f7c64e967031944978de03a520
   category: main
   optional: false
 - name: python
