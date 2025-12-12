@@ -11256,7 +11256,7 @@ package:
   category: main
   optional: false
 - name: nodejs
-  version: 22.19.0
+  version: 22.21.1
   manager: conda
   platform: linux-64
   dependencies:
@@ -11267,10 +11267,10 @@ package:
     libuv: '>=1.51.0,<2.0a0'
     libzlib: '>=1.3.1,<2.0a0'
     openssl: '>=3.5.4,<4.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/nodejs-22.19.0-h4a9c4b4_1.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/nodejs-22.21.1-h4a9c4b4_0.conda
   hash:
-    md5: 4c246c291d6b7a208c7b7080a6304dcf
-    sha256: 371f7cdd45979e1c7ecad5db710625c9a39ca0e79418dd4b06fa11ce0c210b02
+    md5: 3fe7cdb8ea3181917e358f31a9a0b514
+    sha256: 7808695078b286548a56a0833bbe65f0d2a547bc134bc8a12d106b384d048e17
   category: main
   optional: false
 - name: nodejs
@@ -15763,7 +15763,7 @@ package:
   category: main
   optional: false
 - name: tornado
-  version: 6.5.2
+  version: 6.5.3
   manager: conda
   platform: linux-64
   dependencies:
@@ -15771,42 +15771,42 @@ package:
     libgcc: '>=14'
     python: '>=3.13,<3.14.0a0'
     python_abi: 3.13.*
-  url: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.2-py313h07c4f96_2.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.3-py313h07c4f96_0.conda
   hash:
-    md5: 7824f18e343d1f846dcde7b23c9bf31a
-    sha256: 8ef12814ebf787553b351c919d40a599e2331aefec639aef5ce6117cbcfc6a28
+    md5: 82da2dcf1ea3e298f2557b50459809e0
+    sha256: 6006d4e5a6ff99be052c939e43adee844a38f2dc148f44a7c11aa0011fd3d811
   category: main
   optional: false
 - name: tornado
-  version: 6.5.2
+  version: 6.5.3
   manager: conda
   platform: osx-64
   dependencies:
     __osx: '>=10.13'
     python: '>=3.12,<3.13.0a0'
     python_abi: 3.12.*
-  url: https://conda.anaconda.org/conda-forge/osx-64/tornado-6.5.2-py312h80b0991_2.conda
+  url: https://conda.anaconda.org/conda-forge/osx-64/tornado-6.5.3-py312h80b0991_0.conda
   hash:
-    md5: c1e601f785ca8aedc3af1ed562e03dd9
-    sha256: 18a9b336007a32619829b7e4b4008961dfa4537214b99cb9f4dff035637c8a34
+    md5: bb72d4435fc361ecb3989cf55ae8d321
+    sha256: 599fed30fe94479b539f0dbfa56f202d630308b141537195c1cd317ab721be0d
   category: main
   optional: false
 - name: tornado
-  version: 6.5.2
+  version: 6.5.3
   manager: conda
   platform: osx-arm64
   dependencies:
     __osx: '>=11.0'
     python: '>=3.13,<3.14.0a0'
     python_abi: 3.13.*
-  url: https://conda.anaconda.org/conda-forge/osx-arm64/tornado-6.5.2-py313h6535dbc_2.conda
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/tornado-6.5.3-py313h6535dbc_0.conda
   hash:
-    md5: c7fea1e31871009ff882a327ba4b7d9a
-    sha256: 621bcd6a7ca399bb739aa32a2fb639b2389dd5f030af3c7a2d5e639cfe194be4
+    md5: 03f256c8082d66b7551da5230ca6beac
+    sha256: 73e94ff2013323ac55026f4c510a1b6f3cafe2598f464d948362e23654d2bf5d
   category: main
   optional: false
 - name: tornado
-  version: 6.5.2
+  version: 6.5.3
   manager: conda
   platform: win-64
   dependencies:
@@ -15815,10 +15815,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.3,<15'
     vc14_runtime: '>=14.44.35208'
-  url: https://conda.anaconda.org/conda-forge/win-64/tornado-6.5.2-py313h5ea7bf4_2.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/tornado-6.5.3-py313h5ea7bf4_0.conda
   hash:
-    md5: 81bf54645cb6686c47158450cd913ec2
-    sha256: 79a13678078dbdcb800b75d32e7d60f460a2284f1d6ede15ff5478b656608a28
+    md5: dc03cc3533d0fb2c99ddec433feafaf5
+    sha256: 84517475d3afff9d5c8851c9861285345c128877db2d99bb47b86844c279f4ce
   category: main
   optional: false
 - name: traitlets
