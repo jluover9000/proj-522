@@ -1,6 +1,11 @@
 # use the miniforge base, make sure you specify a verion
 FROM condaforge/miniforge3:latest
 
+# installs make at the system level
+RUN apt-get update && apt-get install -y make \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
 # copy the lockfile into the container
 COPY conda-lock.yml conda-lock.yml
 
