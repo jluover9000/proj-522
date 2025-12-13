@@ -13,10 +13,10 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: 900e7a3f7eb1cc69846cf4fe33a813ec6fe7ad895a8b9ee562082d85f68c46ad
-    osx-64: f4635efcc76fe218bf125cab637164072f06715365b8740a98f3d7ab425529ef
-    osx-arm64: 3f8c8f22820d90eb528eaed591e8a58e59be26cc6735e50e8590df78bcc8c3fc
-    win-64: b51d2084ca79fd96be720067caaa2b14b8b01a50c1b35ac8ae086318237bf46b
+    linux-64: 21056060e7bc164a6b8330172503602881422f2400c278650173bca5af47f7d8
+    osx-64: 6a1aad1c470405e5d560599d3d0c9f9b10eacef2bc058ad8ef57c53a3ce7f30e
+    osx-arm64: b4e8f9640b4399c5aeb2f193f882c9df1ae1642b175c32466cd290a7e334042e
+    win-64: 409092595ba2b8b1058b077e26851183164a384aa6da0d7cc26ba91e22ef2fcc
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -3286,6 +3286,69 @@ package:
   hash:
     md5: ff75d06af779966a5aeae1be1d409b96
     sha256: 11b76b0be2f629e8035be1d723ccb6e583eb0d2af93bde56113da7fa6e2f2649
+  category: main
+  optional: false
+- name: coverage
+  version: 7.13.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    __glibc: '>=2.17,<3.0.a0'
+    libgcc: '>=14'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+    tomli: ''
+  url: https://conda.anaconda.org/conda-forge/linux-64/coverage-7.13.0-py313h3dea7bd_0.conda
+  hash:
+    md5: dbf9a488eb9568f9f25c3af44cbbb03e
+    sha256: fa27978639ac4d19f64dbdb1d59330f14267e1bb29202f5fc06c7eeddf8079e8
+  category: main
+  optional: false
+- name: coverage
+  version: 7.13.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    __osx: '>=10.13'
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+    tomli: ''
+  url: https://conda.anaconda.org/conda-forge/osx-64/coverage-7.13.0-py312hacf3034_0.conda
+  hash:
+    md5: 2eb53877ba2ec4cb8fc34bc77593ee68
+    sha256: 1759766e4b834f3f3635866042124bc429cb6a55ebcc29c5c91a54241888e137
+  category: main
+  optional: false
+- name: coverage
+  version: 7.13.0
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    __osx: '>=11.0'
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+    tomli: ''
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/coverage-7.13.0-py313h7d74516_0.conda
+  hash:
+    md5: 7b6199dc705e90d75f7fa3a8e7ecff04
+    sha256: d116032ee3e8a1d4d0903a74d8151fcd04737eb097d9c0b07fc5ad15c4855b97
+  category: main
+  optional: false
+- name: coverage
+  version: 7.13.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.13,<3.14.0a0'
+    python_abi: 3.13.*
+    tomli: ''
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/coverage-7.13.0-py313hd650c13_0.conda
+  hash:
+    md5: 848daa634d880581b0b6e9316eac8270
+    sha256: 60203ce5539148e1701d90f4877fbddd8873d2cc32ea5d2620576cd3580e16fa
   category: main
   optional: false
 - name: cpython
@@ -13357,6 +13420,66 @@ package:
   hash:
     md5: 2b694bad8a50dc2f712f5368de866480
     sha256: 9e749fb465a8bedf0184d8b8996992a38de351f7c64e967031944978de03a520
+  category: main
+  optional: false
+- name: pytest-cov
+  version: 7.0.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    coverage: '>=7.10.6'
+    pluggy: '>=1.2'
+    pytest: '>=7'
+    python: ''
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-cov-7.0.0-pyhcf101f3_1.conda
+  hash:
+    md5: 6891acad5e136cb62a8c2ed2679d6528
+    sha256: d0f45586aad48ef604590188c33c83d76e4fc6370ac569ba0900906b24fd6a26
+  category: main
+  optional: false
+- name: pytest-cov
+  version: 7.0.0
+  manager: conda
+  platform: osx-64
+  dependencies:
+    coverage: '>=7.10.6'
+    pluggy: '>=1.2'
+    pytest: '>=7'
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-cov-7.0.0-pyhcf101f3_1.conda
+  hash:
+    md5: 6891acad5e136cb62a8c2ed2679d6528
+    sha256: d0f45586aad48ef604590188c33c83d76e4fc6370ac569ba0900906b24fd6a26
+  category: main
+  optional: false
+- name: pytest-cov
+  version: 7.0.0
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    coverage: '>=7.10.6'
+    pluggy: '>=1.2'
+    pytest: '>=7'
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-cov-7.0.0-pyhcf101f3_1.conda
+  hash:
+    md5: 6891acad5e136cb62a8c2ed2679d6528
+    sha256: d0f45586aad48ef604590188c33c83d76e4fc6370ac569ba0900906b24fd6a26
+  category: main
+  optional: false
+- name: pytest-cov
+  version: 7.0.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    coverage: '>=7.10.6'
+    pluggy: '>=1.2'
+    pytest: '>=7'
+    python: '>=3.10'
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-cov-7.0.0-pyhcf101f3_1.conda
+  hash:
+    md5: 6891acad5e136cb62a8c2ed2679d6528
+    sha256: d0f45586aad48ef604590188c33c83d76e4fc6370ac569ba0900906b24fd6a26
   category: main
   optional: false
 - name: python
