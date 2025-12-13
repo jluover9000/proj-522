@@ -24,136 +24,32 @@ The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
 
 # Usage
+Clone this repo, and using the command line, navigate to the root of this project.
+
+```bash
+git clone git@github.com:jluover9000/proj-522.git
+cd *proj-522*
+```
 1. First time running the project,
 run the following from the root of this repository:
 
 ``` bash
-docker compose up
+make docker-up-shell
 ```
-2. Open another terminal.
+2. Runs all scripts in order and renders the report in html and pdf
 ``` bash
-# Access bash inside the container
-docker compose exec proj-522 bash
-```
-3. Run the following scripts in order.
-``` bash
-# Step 1: Download data
-python scripts/01_download_data.py --dataset-id=222 --output-dir=data/raw
-```
-``` bash
-# Step 2: Preprocess and split
-python scripts/02_clean_validate_preprocess.py --input-dir=data/raw --output-dir=data/processed
-```
-``` bash
-# Step 3: EDA
-python scripts/03_eda.py --input-dir=data/processed --output-dir=results/figures
-```
-``` bash
-# Step 4: Train model
-python scripts/04_fit_model.py --input-dir=data/processed --output-dir=results/models
-```
-``` bash
-# Step 5: Evaluate
-python scripts/05_evaluate_model.py --test-dir=data/processed --model-dir=results/models --output-dir=results
-```
-## Rendering the Report
-### Inside the Docker container:
-```bash
-quarto render reports/term-deposit-predictor-analysis.qmd --to html
-```
-### Rendering PDF
-```bash
-quarto render reports/term-deposit-predictor-analysis.qmd --to pdf
-```
-#### Troubleshoot 
-If you have not installed a TeX distribution:
-```bash
-quarto install tinytex
+make all
 ```
 ## Cleaning
 
 To shut down the container and clean up the resources, 
-type `Cntrl` + `C` in the terminal
-where you launched the container, and then type `docker compose rm`
 
 ``` bash
 # Remove all generated data and results
-rm -rf data/raw data/processed results
+make clean
 ```
 
 ## Testing
-
-This project includes a comprehensive test suite for all pipeline functions.
-
-### Scripts vs Tests: Independent Workflows
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   TWO SEPARATE WORKFLOWS                         │
-└─────────────────────────────────────────────────────────────────┘
-
-    ANALYSIS PIPELINE                    TEST SUITE
-    (Production)                         (Quality Assurance)
-         │                                      │
-         │                                      │
-    ┌────▼─────┐                          ┌────▼─────┐
-    │ make all │                          │make test │
-    └────┬─────┘                          └────┬─────┘
-         │                                      │
-         ▼                                      ▼
-┌─────────────────┐                    ┌─────────────────┐
-│ Run Scripts     │                    │ Run Tests       │
-│ 01-05           │                    │ test_*.py       │
-└────┬────────────┘                    └────┬────────────┘
-     │                                       │
-     │ import                                │ import
-     ▼                                       ▼
-┌──────────────────────────────────┐   ┌──────────────────────────────────┐
-│        src/ functions            │   │        src/ functions            │
-│  ✓ Same code tested              │◀──│  ✓ Same code tested              │
-└────┬─────────────────────────────┘   └────┬─────────────────────────────┘
-     │                                       │
-     │ use                                   │ use
-     ▼                                       ▼
-┌──────────────────┐                  ┌──────────────────┐
-│ REAL DATA        │                  │ SAMPLE DATA      │
-│ • UCI dataset    │                  │ • 4-100 rows     │
-│ • 45k+ rows      │                  │ • Mock fixtures  │
-│ • Saved outputs  │                  │ • Temp dirs      │
-└────┬─────────────┘                  └────┬─────────────┘
-     │                                      │
-     ▼                                      ▼
-┌──────────────────┐                  ┌──────────────────┐
-│ RESULTS          │                  │ TEST RESULTS     │
-│ • data/          │                  │ • Pass/Fail      │
-│ • results/       │                  │ • Coverage: 78%  │
-│ • reports/       │                  │ • No artifacts   │
-└──────────────────┘                  └──────────────────┘
-
-     KEEPS FILES                          CLEANS UP
-     (for analysis)                       (after each test)
-
-┌─────────────────────────────────────────────────────────────────┐
-│                         KEY DIFFERENCES                          │
-└─────────────────────────────────────────────────────────────────┘
-
-  SCRIPTS (make all)              │  TESTS (make test)
-  ───────────────────────────────────────────────────────────────
-  ✓ Downloads 45k+ real records  │  ✓ Uses 4-100 sample rows
-  ✓ Takes minutes to run         │  ✓ Completes in seconds
-  ✓ Creates persistent files     │  ✓ Uses temp dirs (auto-deleted)
-  ✓ Generates ML model & reports │  ✓ Verifies function logic
-  ✓ Run when doing analysis      │  ✓ Run before commits
-  ✓ Invoked: make all            │  ✓ Invoked: make test
-
-┌─────────────────────────────────────────────────────────────────┐
-│                    THEY NEVER RUN TOGETHER                       │
-│                                                                   │
-│  Running scripts does NOT trigger tests                          │
-│  Running tests does NOT affect your data/results                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
 ### Running Tests
 
 ```bash
@@ -168,15 +64,6 @@ pytest tests/ -v
 pytest tests/ --cov=src --cov-report=html
 ```
 
-### Test Structure
-
-- `tests/conftest.py` - Shared pytest fixtures (sample data, temp directories)
-- `tests/test_download_data.py` - Tests for data downloading
-- `tests/test_preprocess.py` - Tests for preprocessing pipeline
-- `tests/test_eda.py` - Tests for EDA functions
-- `tests/test_model_training.py` - Tests for model training
-- `tests/test_model_evaluation.py` - Tests for model evaluation
-
 ### Code Organization
 
 The project uses a modular structure:
@@ -187,72 +74,8 @@ The project uses a modular structure:
 # Developer
 1. After editing `environment.yml`
 2. Run `rm conda-lock.yml` then enter `y`
-3. Run `conda-lock lock --platform linux-64 --platform linux-aarch64 --file environment.yml`
-## Workflow 
-``` bash
-┌─────────────────────────────────────────────────────────────────┐
-│                    Developer Makes Changes                       │
-│                                                                   │
-│  Edit any of:                                                    │
-│  • environment.yml                                               │
-│  • Dockerfile                                                    │
-│  • conda-lock.yml                                                │
-│  • .github/workflows/docker-publish.yml                          │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-                         │ git push
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              GitHub Actions: docker-publish.yml                  │
-│                                                                   │
-│  1. Update conda-lock.yml (if needed)                            │
-│  2. Build multi-platform Docker image                            │
-│     • linux/amd64                                                │
-│     • linux/arm64                                                │
-│  3. Push to Docker Hub with tags:                                │
-│     • charlene1010/term-deposit-predictor:latest                 │
-│     • charlene1010/term-deposit-predictor:<commit-sha>           │
-│     • charlene1010/term-deposit-predictor:<branch-name>          │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-                         │ on completion
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              GitHub Actions: run-analysis.yml                    │
-│                                                                   │
-│  1. Pull the newly built Docker image                            │
-│  2. Run analysis scripts inside container                        │
-│  3. Generate reports/outputs                                     │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-                         │ analysis complete
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                  Developer Updates docker-compose.yml            │
-│                                                                   │
-│  1. Copy new image SHA from GitHub Actions logs                  │
-│     Example: 4509ab91300d6d7725548bd407dca8958057c4a3           │
-│                                                                   │
-│  2. Update docker-compose.yml:                                   │
-│     image: charlene1010/term-deposit-predictor:<new-sha>         │
-│                                                                   │
-│  3. Commit and push:                                             │
-│     git add docker-compose.yml                                   │
-│     git commit -m "Update Docker image to <new-sha>"             │
-│     git push                                                     │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-                         │ push to GitHub
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    Team Members Pull Changes                     │
-│                                                                   │
-│  1. git pull                                                     │
-│  2. docker compose up                                            │
-│     • Automatically pulls new image with specific SHA            │
-│     • Everyone uses exact same environment                       │
-└─────────────────────────────────────────────────────────────────┘
-```
+3. Run `conda-lock lock --file environment.yml -p linux-64 -p osx-64 -p osx-arm64 -p win-64`
+
 # Dependencies 
   - `python>=3.10`
   - `pandas==2.1.4`
