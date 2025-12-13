@@ -12,21 +12,25 @@ This script:
 5. Saves processed datasets
 """
 
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 import click
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import make_pipeline
-from sklearn.impute import SimpleImputer
-import json
-import pickle
 import pandera as pa
 from pandera import Column, DataFrameSchema, Check
 from scipy.stats import chi2_contingency
 import warnings
+from src.preprocess import (
+    load_raw_data,
+    split_data,
+    create_preprocessor,
+    get_feature_names,
+    save_processed_data,
+)
 
 warnings.filterwarnings("ignore")
 
@@ -35,107 +39,76 @@ warnings.filterwarnings("ignore")
 # DATA VALIDATION FUNCTIONS
 # -------------------------
 
+
 def define_schema():
     """Define Pandera schema for data validation."""
-    schema = DataFrameSchema({
-        "age": Column(int, Check.between(15, 120)),
-        
-        "job": Column(
-            str,
-            Check.isin(["admin.","unknown","unemployed","management","housemaid","entrepreneur","student",
-                       "blue-collar","self-employed","retired","technician","services"])
-        ),
-
-        "marital": Column(
-            str,
-            Check.isin(["married", "single", "divorced"])
-        ),
-
-        "education": Column(
-            str, 
-            Check.isin(["unknown","secondary","primary","tertiary"])
-        ),
-
-        "default": Column(
-            str,
-            Check.isin(["yes", "no", "unknown"])
-        ),
-
-        "balance": Column(
-            int,
-            checks=[
-                Check.ge(-5000),
-                Check.le(500000)
-            ]
-        ),
-
-        "housing": Column(
-            str,
-            Check.isin(["yes", "no"])
-        ),
-
-        "loan": Column(
-            str,
-            Check.isin(["yes", "no"])
-        ),
-
-        "contact": Column(
-            str,
-            Check.isin(["cellular", "telephone", "unknown"])
-        ),
-
-        "day_of_week": Column(
-            int,
-            Check.isin([1, 2, 3, 4, 5, 6, 7])
-        ),
-
-        "month": Column(
-            str,
-            Check.isin(["jan", "feb", "mar", "apr", "may", "jun",
-                       "jul", "aug", "sep", "oct", "nov", "dec"])
-        ),
-
-        "duration": Column(
-            int,
-            checks=[
-                Check.ge(0),
-                Check.le(3600)
-            ]
-        ),
-
-        "campaign": Column(
-            int,
-            checks=[
-                Check.ge(1),
-                Check.le(300)
-            ]
-        ),
-
-        "previous": Column(
-            int,
-            checks=[
-                Check.ge(0),
-                Check.le(24)
-            ]
-        ),
-
-        "poutcome": Column(
-            str,
-            Check.isin(["unknown", "other", "failure", "success"])
-        ),
-
-        "y": Column(
-            str,
-            Check.isin(["yes", "no"])
-        ),    
-    })
+    schema = DataFrameSchema(
+        {
+            "age": Column(int, Check.between(15, 120)),
+            "job": Column(
+                str,
+                Check.isin(
+                    [
+                        "admin.",
+                        "unknown",
+                        "unemployed",
+                        "management",
+                        "housemaid",
+                        "entrepreneur",
+                        "student",
+                        "blue-collar",
+                        "self-employed",
+                        "retired",
+                        "technician",
+                        "services",
+                    ]
+                ),
+            ),
+            "marital": Column(str, Check.isin(["married", "single", "divorced"])),
+            "education": Column(
+                str, Check.isin(["unknown", "secondary", "primary", "tertiary"])
+            ),
+            "default": Column(str, Check.isin(["yes", "no", "unknown"])),
+            "balance": Column(int, checks=[Check.ge(-5000), Check.le(500000)]),
+            "housing": Column(str, Check.isin(["yes", "no"])),
+            "loan": Column(str, Check.isin(["yes", "no"])),
+            "contact": Column(str, Check.isin(["cellular", "telephone", "unknown"])),
+            "day_of_week": Column(int, Check.isin([1, 2, 3, 4, 5, 6, 7])),
+            "month": Column(
+                str,
+                Check.isin(
+                    [
+                        "jan",
+                        "feb",
+                        "mar",
+                        "apr",
+                        "may",
+                        "jun",
+                        "jul",
+                        "aug",
+                        "sep",
+                        "oct",
+                        "nov",
+                        "dec",
+                    ]
+                ),
+            ),
+            "duration": Column(int, checks=[Check.ge(0), Check.le(3600)]),
+            "campaign": Column(int, checks=[Check.ge(1), Check.le(300)]),
+            "previous": Column(int, checks=[Check.ge(0), Check.le(24)]),
+            "poutcome": Column(
+                str, Check.isin(["unknown", "other", "failure", "success"])
+            ),
+            "y": Column(str, Check.isin(["yes", "no"])),
+        }
+    )
     return schema
 
 
 def validate_data(df, schema):
     """Validate DataFrame against schema and print results."""
     print("\n--- DATA VALIDATION ---")
-    
+
     try:
         schema.validate(df, lazy=True)
         print("✓ All validation checks passed!")
@@ -161,12 +134,14 @@ def check_duplicates(df):
 def check_missing_values(df, threshold=0.05):
     """Check missing values per column."""
     print("\n--- MISSING VALUES CHECK ---")
-    missing_report = pd.DataFrame({
-        "total_missing": df.isna().sum(),
-        "missing_fraction": df.isna().mean(),
-        "exceeds_threshold": df.isna().mean() > threshold
-    })
-    
+    missing_report = pd.DataFrame(
+        {
+            "total_missing": df.isna().sum(),
+            "missing_fraction": df.isna().mean(),
+            "exceeds_threshold": df.isna().mean() > threshold,
+        }
+    )
+
     print(f"  Threshold: {threshold*100}%")
     exceeds = missing_report[missing_report["exceeds_threshold"]]
     if not exceeds.empty:
@@ -176,15 +151,17 @@ def check_missing_values(df, threshold=0.05):
             print(f"    - {col}: {pct:.2f}%")
     else:
         print("  ✓ All columns within threshold")
-    
+
     return missing_report
 
 
-def check_target_distribution(df, target="y", expected={"no": 0.5, "yes": 0.5}, tolerance=0.05):
+def check_target_distribution(
+    df, target="y", expected={"no": 0.5, "yes": 0.5}, tolerance=0.05
+):
     """Check if target distribution is balanced."""
     print("\n--- TARGET DISTRIBUTION CHECK ---")
     counts = df[target].value_counts(normalize=True)
-    
+
     report = []
     all_within = True
     for cat, expected_prop in expected.items():
@@ -192,21 +169,25 @@ def check_target_distribution(df, target="y", expected={"no": 0.5, "yes": 0.5}, 
         within_tol = abs(obs_prop - expected_prop) <= tolerance
         if not within_tol:
             all_within = False
-        report.append({
-            "category": cat,
-            "observed": obs_prop,
-            "expected": expected_prop,
-            "within_tolerance": within_tol
-        })
-    
+        report.append(
+            {
+                "category": cat,
+                "observed": obs_prop,
+                "expected": expected_prop,
+                "within_tolerance": within_tol,
+            }
+        )
+
     report_df = pd.DataFrame(report)
     print(report_df)
-    
+
     if not all_within:
-        print("  ⚠ Target distribution is imbalanced (expected, may require class balancing)")
+        print(
+            "  ⚠ Target distribution is imbalanced (expected, may require class balancing)"
+        )
     else:
         print("  ✓ Target distribution is balanced")
-    
+
     return report_df
 
 
@@ -230,8 +211,8 @@ def correlation_ratio(categories, values):
         vals = values[categories == cat]
         means.append(np.mean(vals))
         counts.append(len(vals))
-    between = np.sum(counts * (np.array(means) - overall_mean)**2)
-    total = np.sum((values - overall_mean)**2)
+    between = np.sum(counts * (np.array(means) - overall_mean) ** 2)
+    total = np.sum((values - overall_mean) ** 2)
     return np.sqrt(between / total) if total != 0 else 0
 
 
@@ -243,9 +224,11 @@ def check_feature_correlations(df, target="y", threshold=0.8):
     results = []
 
     for i, c1 in enumerate(cols):
-        for c2 in cols[i+1:]:
+        for c2 in cols[i + 1 :]:
             x, y_col = features[c1], features[c2]
-            if np.issubdtype(x.dtype, np.number) and np.issubdtype(y_col.dtype, np.number):
+            if np.issubdtype(x.dtype, np.number) and np.issubdtype(
+                y_col.dtype, np.number
+            ):
                 corr = abs(x.corr(y_col))
             elif x.dtype == "object" and y_col.dtype == "object":
                 corr = cramers_v(x, y_col)
@@ -254,23 +237,26 @@ def check_feature_correlations(df, target="y", threshold=0.8):
                     corr = correlation_ratio(y_col.astype(str), x)
                 else:
                     corr = correlation_ratio(x.astype(str), y_col)
-            
+
             if corr > threshold:
                 results.append({"feature_1": c1, "feature_2": c2, "correlation": corr})
 
     if results:
         print(f"  ⚠ High correlations found (threshold: {threshold}):")
         for r in results:
-            print(f"    - {r['feature_1']} <-> {r['feature_2']}: {r['correlation']:.3f}")
+            print(
+                f"    - {r['feature_1']} <-> {r['feature_2']}: {r['correlation']:.3f}"
+            )
     else:
         print(f"  ✓ No high correlations found (threshold: {threshold})")
-    
+
     return pd.DataFrame(results) if results else pd.DataFrame()
 
 
 # -------------------------
 # MAIN SCRIPT
 # -------------------------
+
 
 @click.command()
 @click.option(
@@ -324,14 +310,9 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     --------
     python scripts/02_clean_preprocess.py --input-dir=data/raw --output-dir=data/processed
     """
-
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-
     # Load raw data
     print(f"Loading raw data from {input_dir}...")
-    X = pd.read_csv(os.path.join(input_dir, "bank_marketing_features.csv"))
-    y = pd.read_csv(os.path.join(input_dir, "bank_marketing_targets.csv"))
+    X, y = load_raw_data(input_dir)
 
     print(f"  Features shape: {X.shape}")
     print(f"  Targets shape: {y.shape}")
@@ -343,47 +324,38 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     # DATA VALIDATION
     # -------------------------
     if not skip_validation:
-        print("\n" + "="*50)
+        print("\n" + "=" * 50)
         print("RUNNING DATA VALIDATION CHECKS")
-        print("="*50)
-        
+        print("=" * 50)
+
         # Schema validation
         schema = define_schema()
         validate_data(df_full, schema)
-        
+
         # Duplicate check
         check_duplicates(df_full)
-        
+
         # Missing values check
         check_missing_values(df_full, threshold=0.05)
-        
+
         # Target distribution check
         check_target_distribution(df_full, target="y")
-        
+
         # Feature correlation check
         check_feature_correlations(df_full, target="y", threshold=0.8)
-        
-        print("\n" + "="*50)
+
+        print("\n" + "=" * 50)
         print("VALIDATION COMPLETE")
-        print("="*50)
+        print("=" * 50)
 
     # -------------------------
     # TRAIN/TEST SPLIT
     # -------------------------
-    
-    # Split the data with stratification
-    # Stratify makes train and test sets have the same proportion of "yes" and "no"
     print(f"\nSplitting data (test_size={test_size}, random_state={random_state})...")
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state, stratify=y
-    )
+    X_train, X_test, y_train, y_test = split_data(X, y, test_size, random_state)
 
     print(f"  Training set size: {X_train.shape}")
     print(f"  Test set size: {X_test.shape}")
-
-    # Save unprocessed data for eda
-    print(f"\nSaving unprocessed training data to {output_dir}...")
-    X_train.to_csv(os.path.join(output_dir, "X_train_unprocessed.csv"), index=False)
 
     # Print class distribution
     print("\nClass distribution in training set:")
@@ -395,7 +367,7 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     # -------------------------
     # PREPROCESSING PIPELINE
     # -------------------------
-    
+
     # Identify column types
     categorical_columns = X_train.select_dtypes(include=["object"]).columns.tolist()
     numerical_columns = X_train.select_dtypes(include=["number"]).columns.tolist()
@@ -403,72 +375,35 @@ def main(input_dir, output_dir, test_size, random_state, skip_validation):
     print(f"\nCategorical columns: {len(categorical_columns)}")
     print(f"Numerical columns: {len(numerical_columns)}")
 
-    # Create preprocessing pipelines
+    # Create and fit preprocessing pipeline
     print("\nCreating preprocessing pipelines...")
-    numeric_pipeline = make_pipeline(SimpleImputer(strategy="median"), StandardScaler())
+    preprocessor = create_preprocessor(numerical_columns, categorical_columns)
 
-    categorical_pipeline = make_pipeline(
-        SimpleImputer(strategy="constant", fill_value="unknown"),
-        OneHotEncoder(drop="first", handle_unknown="ignore"),
-    )
-
-    # Combine preprocessing steps
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", numeric_pipeline, numerical_columns),
-            ("cat", categorical_pipeline, categorical_columns),
-        ],
-        sparse_threshold=0,  # Force dense output
-    )
-
-    # Fit on training data
-    print("\nFitting preprocessing pipeline on X_train...")
+    print("Fitting preprocessing pipeline on X_train...")
     preprocessor.fit(X_train)
 
     # Transform train and test
     print("Transforming X_train and X_test...")
-    X_train_t = preprocessor.transform(X_train)
-    X_test_t = preprocessor.transform(X_test)
+    X_train_transformed = preprocessor.transform(X_train)
+    X_test_transformed = preprocessor.transform(X_test)
 
-    # Build feature names
-    cat_encoder = preprocessor.named_transformers_["cat"].named_steps["onehotencoder"]
-    categorical_feature_names = cat_encoder.get_feature_names_out(categorical_columns)
-    feature_names = numerical_columns + categorical_feature_names.tolist()
+    # Get feature names
+    feature_names = get_feature_names(
+        preprocessor, numerical_columns, categorical_columns
+    )
 
     # Convert to DataFrames
-    X_train_df = pd.DataFrame(X_train_t, columns=feature_names)
-    X_test_df = pd.DataFrame(X_test_t, columns=feature_names)
+    X_train_df = pd.DataFrame(X_train_transformed, columns=feature_names)
+    X_test_df = pd.DataFrame(X_test_transformed, columns=feature_names)
 
     print(f"Transformed X_train dataframe shape: {X_train_df.shape}")
     print(f"Transformed X_test dataframe shape: {X_test_df.shape}")
 
-    # Save transformed datasets
-    print("\nSaving transformed datasets...")
-    X_train_df.to_csv(os.path.join(output_dir, "X_train_transformed.csv"), index=False)
-    X_test_df.to_csv(os.path.join(output_dir, "X_test_transformed.csv"), index=False)
-    y_train.to_csv(os.path.join(output_dir, "y_train.csv"), index=False)
-    y_test.to_csv(os.path.join(output_dir, "y_test.csv"), index=False)
+    # Save all processed data
+    print("\nSaving processed datasets...")
+    save_processed_data(X_train, X_train_df, X_test_df, y_train, y_test, output_dir)
 
-    # Save fitted preprocessor
-    preprocessor_path = os.path.join(output_dir, "preprocessor.pkl")
-    with open(preprocessor_path, "wb") as f:
-        pickle.dump(preprocessor, f)
-    print(f"Saved fitted preprocessor → {preprocessor_path}")
-
-    # Save column metadata
-    metadata_path = os.path.join(output_dir, "column_info.json")
-    with open(metadata_path, "w") as f:
-        json.dump(
-            {
-                "categorical_columns": categorical_columns,
-                "numerical_columns": numerical_columns,
-                "feature_names": feature_names,
-            },
-            f,
-            indent=4,
-        )
-    print(f"Saved preprocessing metadata → {metadata_path}")
-    print("\n✓ Data preprocessing complete!")
+    print(f"\n✓ Data preprocessing complete!")
 
 
 if __name__ == "__main__":

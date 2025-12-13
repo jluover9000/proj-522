@@ -11,12 +11,20 @@ This script:
 4. Saves figures and tables
 """
 
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 import click
-import pandas as pd
 import warnings
-import altair as alt
-import altair_ally as ally
+from src.eda import (
+    load_training_data,
+    generate_distribution_plots,
+    generate_correlation_matrix,
+    generate_summary_statistics,
+    save_eda_outputs,
+)
 
 # Suppress warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -56,43 +64,24 @@ def main(input_dir, output_dir):
     --------
     python scripts/03_eda.py --input-dir=data/processed --output-dir=results/figures
     """
-
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-
     # Load training data
     print(f"Loading training data from {input_dir}...")
-    X_train = pd.read_csv(os.path.join(input_dir, "X_train_unprocessed.csv"))
-    y_train = pd.read_csv(os.path.join(input_dir, "y_train.csv"))
-
-    # Combine features and target
-    train_df = pd.concat([X_train, y_train], axis=1)
-
+    train_df = load_training_data(input_dir)
     print(f"  Training data shape: {train_df.shape}")
 
-    # Enable VegaFusion for better performance
-    ally.alt.data_transformers.enable("vegafusion")
-
-    # Generate distribution plots
+    # Generate visualizations
     print("\nGenerating feature distribution plots...")
-    dist_chart = ally.dist(train_df, color="y")
-    dist_file = os.path.join(output_dir, "feature_distributions.png")
-    dist_chart.save(dist_file)
-    print(f"  Saved: {dist_file}")
+    dist_chart = generate_distribution_plots(train_df, target_col="y")
 
-    # Generate correlation matrix
-    print("\nGenerating correlation matrix...")
-    corr_chart = ally.corr(train_df)
-    corr_file = os.path.join(output_dir, "feature_correlations.png")
-    corr_chart.save(corr_file)
-    print(f"  Saved: {corr_file}")
+    print("Generating correlation matrix...")
+    corr_chart = generate_correlation_matrix(train_df)
 
-    # Generate summary statistics
-    print("\nGenerating summary statistics...")
-    summary_stats = train_df.describe()
-    stats_file = os.path.join(output_dir, "summary_statistics.csv")
-    summary_stats.to_csv(stats_file)
-    print(f"  Saved: {stats_file}")
+    print("Generating summary statistics...")
+    summary_stats = generate_summary_statistics(train_df)
+
+    # Save outputs
+    print(f"\nSaving outputs to {output_dir}...")
+    save_eda_outputs(dist_chart, corr_chart, summary_stats, output_dir)
 
     print(f"\n✓ EDA complete! Visualizations saved to {output_dir}")
 

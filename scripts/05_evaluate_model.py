@@ -11,18 +11,22 @@ This script:
 4. Saves evaluation metrics
 """
 
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 import click
-import pandas as pd
-import pickle
-from sklearn.metrics import (
-    classification_report,
-    confusion_matrix,
-    accuracy_score,
-    roc_auc_score,
-    f1_score,
-)
 import warnings
+from src.model_evaluation import (
+    load_test_data,
+    load_model,
+    make_predictions,
+    calculate_metrics,
+    generate_classification_report,
+    generate_confusion_matrix,
+    save_evaluation_results,
+)
 
 warnings.filterwarnings("ignore")
 
@@ -63,89 +67,47 @@ def main(test_dir, model_dir, output_dir):
     --------
     python scripts/05_evaluate_model.py --test-dir=data/processed --model-dir=results/models --output-dir=results
     """
-
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-
     # Load test data
     print(f"Loading test data from {test_dir}...")
-    X_test = pd.read_csv(os.path.join(test_dir, "X_test_transformed.csv"))
-    y_test = pd.read_csv(os.path.join(test_dir, "y_test.csv"))
-
+    X_test, y_test = load_test_data(test_dir)
     print(f"  Test set size: {X_test.shape}")
 
-    # Load trained model and label encoder
+    # Load trained model
     print(f"\nLoading trained model from {model_dir}...")
-    with open(os.path.join(model_dir, "logistic_regression_model.pkl"), "rb") as f:
-        model = pickle.load(f)
-
-    with open(os.path.join(model_dir, "label_encoder.pkl"), "rb") as f:
-        label_encoder = pickle.load(f)
+    model, label_encoder = load_model(model_dir)
 
     # Encode test target
     y_test_encoded = label_encoder.transform(y_test.values.ravel())
 
     # Make predictions
     print("\nMaking predictions on test set...")
-    y_pred = model.predict(X_test)
-    y_pred_proba = model.predict_proba(X_test)[:, 1]
+    y_pred, y_pred_proba = make_predictions(model, X_test)
 
     # Calculate metrics
     print("\nCalculating evaluation metrics...")
-    accuracy = accuracy_score(y_test_encoded, y_pred)
-    f1 = f1_score(y_test_encoded, y_pred)
-    roc_auc = roc_auc_score(y_test_encoded, y_pred_proba)
+    metrics = calculate_metrics(y_test_encoded, y_pred, y_pred_proba)
 
     print(f"\nTest Set Performance:")
-    print(f"  Accuracy: {accuracy:.3f}")
-    print(f"  F1 Score: {f1:.3f}")
-    print(f"  ROC-AUC: {roc_auc:.3f}")
+    print(f"  Accuracy: {metrics['accuracy']:.3f}")
+    print(f"  F1 Score: {metrics['f1']:.3f}")
+    print(f"  ROC-AUC: {metrics['roc_auc']:.3f}")
 
-    # Generate classification report
+    # Generate reports
     print("\nClassification Report:")
-    class_report = classification_report(
-        y_test_encoded, y_pred, target_names=label_encoder.classes_, output_dict=True
+    class_report = generate_classification_report(
+        y_test_encoded, y_pred, label_encoder.classes_
     )
-    print(
-        classification_report(
-            y_test_encoded, y_pred, target_names=label_encoder.classes_
-        )
-    )
+    print(class_report)
 
-    # Generate confusion matrix
     print("\nConfusion Matrix:")
-    conf_matrix = confusion_matrix(y_test_encoded, y_pred)
+    conf_matrix = generate_confusion_matrix(
+        y_test_encoded, y_pred, label_encoder.classes_
+    )
     print(conf_matrix)
 
     # Save results
     print(f"\nSaving evaluation results to {output_dir}...")
-
-    # Save metrics summary
-    metrics_summary = pd.DataFrame(
-        {
-            "Metric": ["Accuracy", "F1 Score", "ROC-AUC"],
-            "Score": [accuracy, f1, roc_auc],
-        }
-    )
-    metrics_file = os.path.join(output_dir, "test_metrics.csv")
-    metrics_summary.to_csv(metrics_file, index=False)
-    print(f"  Saved: {metrics_file}")
-
-    # Save classification report
-    class_report_df = pd.DataFrame(class_report).transpose()
-    report_file = os.path.join(output_dir, "classification_report.csv")
-    class_report_df.to_csv(report_file)
-    print(f"  Saved: {report_file}")
-
-    # Save confusion matrix
-    conf_matrix_df = pd.DataFrame(
-        conf_matrix,
-        index=[f"Actual_{c}" for c in label_encoder.classes_],
-        columns=[f"Predicted_{c}" for c in label_encoder.classes_],
-    )
-    matrix_file = os.path.join(output_dir, "confusion_matrix.csv")
-    conf_matrix_df.to_csv(matrix_file)
-    print(f"  Saved: {matrix_file}")
+    save_evaluation_results(metrics, class_report, conf_matrix, output_dir)
 
     print(f"\n✓ Model evaluation complete!")
 

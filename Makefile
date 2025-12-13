@@ -92,3 +92,11 @@ results/figures/summary_statistics.csv
 .PHONY: clean
 clean: ## Remove all generated data and results
 	rm -rf data/raw data/processed results
+
+.PHONY: test
+test: ## Run pytest test suite
+	pytest tests/ -v
+
+.PHONY: test-cov
+test-cov: ## Run tests with coverage report
+	pytest tests/ --cov=src --cov-report=html --cov-report=term
