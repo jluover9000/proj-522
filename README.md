@@ -23,6 +23,9 @@ This project follows a modular architecture with:
 The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
 
+# Contributing 
+We welcome feedback and suggestions for our project. Please see the link [here](https://github.com/jluover9000/proj-522?tab=contributing-ov-file#readme) for how to contribute.
+
 # Usage
 Clone this repo, and using the command line, navigate to the root of this project.
 
