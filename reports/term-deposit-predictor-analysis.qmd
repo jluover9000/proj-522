@@ -10,7 +10,7 @@ jupyter: python3
 format:
   html:
     toc: true       
-    toc-depth: 2
+    toc-depth: 3
     embed-resources: true
   pdf:
     toc: true
@@ -91,5 +91,19 @@ Future work could explore whether non-linear models (e.g., tree-based or ensembl
 As shown in @tbl-test-metrics, the model performs effectively on the held-out test set.
 
 Our prediction model performed quite well on test data, with a final overall accuracy of 0.844 and an F1 score of 0.551. The ROC-AUC score of 0.91 indicates that the model is effective at distinguishing between clients who will and will not subscribe to a term deposit. However, there is room for improvement in identifying all potential subscribers, as some were missed by the model.
+
+
+# Assumptions and Limitations
+
+This analysis is conducted under several assumptions and has a number of limitations that should be acknowledged.
+
+First, the analysis assumes that the Bank Marketing dataset is representative of future marketing campaigns. However, the data were collected during a specific time period and economic context, which may limit the generalizability of the results.
+
+Second, the target variable is highly imbalanced, with only around 11–12% of clients subscribing to a term deposit. While this was addressed by using stratified train-test splits and evaluation metrics such as F1-score and ROC-AUC, no explicit resampling techniques were applied. As a result, model performance on the minority class may still be limited.
+
+Third, this project focuses on a baseline logistic regression model with limited hyperparameter tuning. More complex models or additional feature engineering may further improve predictive performance.
+
+Finally, all conclusions are based solely on the available features in the dataset. Any unobserved factors influencing client subscription behavior are not captured and may affect the results.
+
 
 # References
