@@ -31,6 +31,7 @@ from src.preprocess import (
     get_feature_names,
     save_processed_data,
 )
+from src.validation_data import validate_data
 
 warnings.filterwarnings("ignore")
 
@@ -104,22 +105,6 @@ def define_schema():
     )
     return schema
 
-
-def validate_data(df, schema):
-    """Validate DataFrame against schema and print results."""
-    print("\n--- DATA VALIDATION ---")
-
-    try:
-        schema.validate(df, lazy=True)
-        print("✓ All validation checks passed!")
-        return True
-    except pa.errors.SchemaErrors as err:
-        print("⚠ Validation issues found:")
-        print("\nFailures per column:")
-        print(err.failure_cases["column"].value_counts())
-        print("\nUnique errors per column:")
-        print(err.failure_cases.groupby("column")["failure_case"].nunique())
-        return False
 
 
 def check_duplicates(df):
