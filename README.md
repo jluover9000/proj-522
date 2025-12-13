@@ -80,76 +80,7 @@ rm -rf data/raw data/processed results
 
 ## Testing
 
-This project includes a comprehensive test suite for all pipeline functions.
-
-### Scripts vs Tests: Independent Workflows
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   TWO SEPARATE WORKFLOWS                         │
-└─────────────────────────────────────────────────────────────────┘
-
-    ANALYSIS PIPELINE                    TEST SUITE
-    (Production)                         (Quality Assurance)
-         │                                      │
-         │                                      │
-    ┌────▼─────┐                          ┌────▼─────┐
-    │ make all │                          │make test │
-    └────┬─────┘                          └────┬─────┘
-         │                                      │
-         ▼                                      ▼
-┌─────────────────┐                    ┌─────────────────┐
-│ Run Scripts     │                    │ Run Tests       │
-│ 01-05           │                    │ test_*.py       │
-└────┬────────────┘                    └────┬────────────┘
-     │                                       │
-     │ import                                │ import
-     ▼                                       ▼
-┌──────────────────────────────────┐   ┌──────────────────────────────────┐
-│        src/ functions            │   │        src/ functions            │
-│  ✓ Same code tested              │◀──│  ✓ Same code tested              │
-└────┬─────────────────────────────┘   └────┬─────────────────────────────┘
-     │                                       │
-     │ use                                   │ use
-     ▼                                       ▼
-┌──────────────────┐                  ┌──────────────────┐
-│ REAL DATA        │                  │ SAMPLE DATA      │
-│ • UCI dataset    │                  │ • 4-100 rows     │
-│ • 45k+ rows      │                  │ • Mock fixtures  │
-│ • Saved outputs  │                  │ • Temp dirs      │
-└────┬─────────────┘                  └────┬─────────────┘
-     │                                      │
-     ▼                                      ▼
-┌──────────────────┐                  ┌──────────────────┐
-│ RESULTS          │                  │ TEST RESULTS     │
-│ • data/          │                  │ • Pass/Fail      │
-│ • results/       │                  │ • Coverage: 78%  │
-│ • reports/       │                  │ • No artifacts   │
-└──────────────────┘                  └──────────────────┘
-
-     KEEPS FILES                          CLEANS UP
-     (for analysis)                       (after each test)
-
-┌─────────────────────────────────────────────────────────────────┐
-│                         KEY DIFFERENCES                          │
-└─────────────────────────────────────────────────────────────────┘
-
-  SCRIPTS (make all)              │  TESTS (make test)
-  ───────────────────────────────────────────────────────────────
-  ✓ Downloads 45k+ real records  │  ✓ Uses 4-100 sample rows
-  ✓ Takes minutes to run         │  ✓ Completes in seconds
-  ✓ Creates persistent files     │  ✓ Uses temp dirs (auto-deleted)
-  ✓ Generates ML model & reports │  ✓ Verifies function logic
-  ✓ Run when doing analysis      │  ✓ Run before commits
-  ✓ Invoked: make all            │  ✓ Invoked: make test
-
-┌─────────────────────────────────────────────────────────────────┐
-│                    THEY NEVER RUN TOGETHER                       │
-│                                                                   │
-│  Running scripts does NOT trigger tests                          │
-│  Running tests does NOT affect your data/results                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+This project includes a test suite for some functions.
 
 ### Running Tests
 
@@ -170,7 +101,6 @@ pytest tests/ --cov=src --cov-report=html
 - `tests/conftest.py` - Shared pytest fixtures (sample data, temp directories)
 - `tests/test_download_data.py` - Tests for data downloading
 - `tests/test_preprocess.py` - Tests for preprocessing pipeline
-- `tests/test_eda.py` - Tests for EDA functions
 - `tests/test_model_training.py` - Tests for model training
 - `tests/test_model_evaluation.py` - Tests for model evaluation
 
