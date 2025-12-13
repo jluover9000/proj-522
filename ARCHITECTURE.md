@@ -54,62 +54,6 @@ This project follows a modular architecture separating concerns between reusable
                              │  ✓ Testable in isolation           │
                              │  ✓ Reusable across scripts         │
                              └─────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│                     EXAMPLE: DATA DOWNLOAD                       │
-└─────────────────────────────────────────────────────────────────┘
-
-  scripts/01_download_data.py          src/download_data.py
-  ───────────────────────────          ────────────────────
-  
-  @click.command()                     def fetch_dataset(id):
-  def main(dataset_id, dir):               """Fetch from UCI"""
-      # CLI orchestration                  bank = fetch_ucirepo(id)
-      X, y = fetch_dataset(id) ────▶       return X, y
-      save_data(X, y, dir)     ────▶   
-                                       def save_data(X, y, dir):
-                                           """Save to CSV"""
-                                           os.makedirs(dir)
-                                           X.to_csv(...)
-                                           y.to_csv(...)
-                                           return paths
-                                           
-                                           ▲
-                                           │ import & test
-                                           │
-  tests/test_download_data.py          │
-  ───────────────────────────          │
-                                           │
-  def test_save_data(temp_dir):        │
-      X = pd.DataFrame(...)            │
-      y = pd.DataFrame(...)            │
-      paths = save_data(X, y, temp_dir)──┘
-      assert os.path.exists(paths[0])
-      assert os.path.exists(paths[1])
-
-┌─────────────────────────────────────────────────────────────────┐
-│                     WHY THIS STRUCTURE?                          │
-└─────────────────────────────────────────────────────────────────┘
-
-  ✓ Separation of Concerns
-    • src/ = business logic (what to do)
-    • scripts/ = CLI interface (how to invoke)
-    • tests/ = quality assurance (verify correctness)
-
-  ✓ Testability
-    • Functions in src/ are pure (no CLI dependencies)
-    • Easy to unit test with sample data
-    • No need to mock click or parse arguments
-
-  ✓ Reusability
-    • Functions can be imported anywhere
-    • Jupyter notebooks can use src/ directly
-    • Other scripts can compose functions
-
-  ✓ Maintainability
-    • Changes to logic happen in one place (src/)
-    • CLI changes don't affect core functionality
-    • Tests prevent regressions
 ```
 
 ---
@@ -265,4 +209,4 @@ This project follows best practices for:
 - **Testability**: Pure functions tested in isolation
 - **Reproducibility**: Docker + conda-lock for consistent environments
 - **CI/CD**: Automated builds and deployments via GitHub Actions
-- **Quality Assurance**: Comprehensive test suite with 78% coverage
+- **Quality Assurance**: Comprehensive test suite 
