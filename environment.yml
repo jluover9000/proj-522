@@ -12,6 +12,8 @@ dependencies:
   - ucimlrepo
   - pointblank
   - python>=3.10  # Specify Python version
+  - pytest
+  - pytest-cov
   - scikit-learn
   - vl-convert-python>=1.8.0
   - pyarrow>=14.0.0

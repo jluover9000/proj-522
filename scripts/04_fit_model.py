@@ -12,14 +12,21 @@ This script:
 5. Saves the trained model and training results
 """
 
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 import click
-import pandas as pd
-import pickle
-from sklearn.model_selection import cross_validate, StratifiedKFold
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import LabelEncoder
 import warnings
+from src.model_training import (
+    load_transformed_data,
+    encode_target,
+    create_model,
+    perform_cross_validation,
+    train_final_model,
+    save_model,
+)
 
 warnings.filterwarnings("ignore")
 
@@ -68,70 +75,36 @@ def main(input_dir, output_dir, cv_folds, random_state):
     --------
     python scripts/04_fit_model.py --input-dir=data/processed --output-dir=results/models
     """
-
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Load transformed features
+    # Load transformed data
     print(f"Loading transformed data from {input_dir}...")
-    X_train = pd.read_csv(os.path.join(input_dir, "X_train_transformed.csv"))
-    y_train = pd.read_csv(os.path.join(input_dir, "y_train.csv"))
-
+    X_train, y_train = load_transformed_data(input_dir)
     print(f"  Training set size: {X_train.shape}")
-
-    lr_model = LogisticRegression(
-        random_state=random_state, 
-        max_iter=2000, 
-        class_weight="balanced"
-        )
 
     # Encode target variable
     print("\nEncoding target variable...")
-    label_encoder = LabelEncoder()
-    y_train_encoded = label_encoder.fit_transform(y_train.values.ravel())
-
+    label_encoder, y_train_encoded = encode_target(y_train)
     print(f"  Target classes: {label_encoder.classes_}")
-    print(f"  Class distribution: {pd.Series(y_train_encoded).value_counts()}")
 
-    # Perform stratified cross-validation
+    # Create model
+    lr_model = create_model(max_iter=2000, random_state=random_state)
+
+    # Perform cross-validation
     print(f"\nPerforming {cv_folds}-fold stratified cross-validation...")
-    skf = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=random_state)
-    cv_results = cross_validate(
-        lr_model,
-        X_train,
-        y_train_encoded,
-        cv=skf,
-        scoring={"accuracy": "accuracy", "f1": "f1", "roc_auc": "roc_auc"},
-        return_train_score=True,
-        n_jobs=1,  # Use single process to avoid Python 3.13 joblib compatibility issues
+    cv_summary = perform_cross_validation(
+        lr_model, X_train, y_train_encoded, cv_folds=cv_folds, random_state=random_state
     )
-
-    # Display CV results
-    cv_summary = pd.DataFrame(cv_results).agg(["mean", "std"]).round(3).T
     print("\nCross-validation results:")
     print(cv_summary)
 
-    # Save CV results
-    cv_file = os.path.join(output_dir, "cv_results.csv")
-    cv_summary.to_csv(cv_file)
-    print(f"  CV results saved to {cv_file}")
-
-    # Train final model on full transformed training set
+    # Train final model
     print("\nTraining final model...")
-    lr_model.fit(X_train, y_train_encoded)
+    trained_model = train_final_model(lr_model, X_train, y_train_encoded)
 
-    # Save model + encoder
-    model_file = os.path.join(output_dir, "logistic_regression_model.pkl")
-    encoder_file = os.path.join(output_dir, "label_encoder.pkl")
-        
-    with open(model_file, "wb") as f:
-        pickle.dump(lr_model, f)
+    # Save model and results
+    print(f"\nSaving model to {output_dir}...")
+    save_model(trained_model, label_encoder, output_dir)
+    cv_summary.to_csv(f"{output_dir}/cv_results.csv")
 
-    with open(encoder_file, "wb") as f:
-        pickle.dump(label_encoder, f)
-
-    print(f"  Model: {model_file}")
-    print(f"  Encoder: {encoder_file}")
     print(f"\n✓ Model training complete!")
 
 

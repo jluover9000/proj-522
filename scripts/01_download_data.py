@@ -9,10 +9,13 @@ This script:
 2. Saves features and targets as separate CSV files
 """
 
+import sys
 import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 import click
-from ucimlrepo import fetch_ucirepo
-import pandas as pd
+from src.download_data import fetch_dataset, save_data
 
 
 @click.command()
@@ -40,27 +43,13 @@ def main(dataset_id, output_dir):
     --------
     python scripts/01_download_data.py --dataset-id=222 --output-dir=data/raw
     """
-
-    # Create output directory
-    os.makedirs(output_dir, exist_ok=True)
-
-    features_file = os.path.join(output_dir, "bank_marketing_features.csv")
-    targets_file = os.path.join(output_dir, "bank_marketing_targets.csv")
-
     # Fetch dataset from UCI ML Repository
     print(f"Downloading dataset {dataset_id} from UCI ML Repository...")
-    bank_marketing = fetch_ucirepo(id=dataset_id)
-
-    # Extract features and targets
-    X = bank_marketing.data.features
-    y = bank_marketing.data.targets
+    X, y = fetch_dataset(dataset_id)
 
     # Save to CSV
-    print(f"Saving features to {features_file}...")
-    X.to_csv(features_file, index=False)
-
-    print(f"Saving targets to {targets_file}...")
-    y.to_csv(targets_file, index=False)
+    print(f"Saving data to {output_dir}...")
+    features_file, targets_file = save_data(X, y, output_dir)
 
     print(f"\n✓ Dataset downloaded successfully!")
     print(f"  Features shape: {X.shape}")
