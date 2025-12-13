@@ -24,6 +24,12 @@ The final report can be found
 [here](https://jluover9000.github.io/proj-522/).
 
 # Usage
+Clone this repo, and using the command line, navigate to the root of this project.
+
+```bash
+git clone git@github.com:jluover9000/proj-522.git
+cd *proj-522*
+```
 1. First time running the project,
 run the following from the root of this repository:
 
