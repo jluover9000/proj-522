@@ -2,16 +2,19 @@ import sys
 import os
 import pandas as pd
 import pytest
-from pandera import Column, DataFrameSchema, Check
-import pandera as pa
+import pandera.pandas as pa
+from pandera.pandas import Column, DataFrameSchema, Check
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.validation_data import validate_data
 
 
 def test_validate_data_raises_on_invalid_df():
-    schema = DataFrameSchema({
-        "age": Column(int, Check.between(15, 120)),
-    })
+    schema = DataFrameSchema(
+        {
+            "age": Column(int, Check.between(15, 120)),
+        }
+    )
 
     # invalid: age too small
     df = pd.DataFrame({"age": [10, 20]})
@@ -21,9 +24,11 @@ def test_validate_data_raises_on_invalid_df():
 
 
 def test_validate_data_does_not_raise_on_valid_df():
-    schema = DataFrameSchema({
-        "age": Column(int, Check.between(15, 120)),
-    })
+    schema = DataFrameSchema(
+        {
+            "age": Column(int, Check.between(15, 120)),
+        }
+    )
 
     df = pd.DataFrame({"age": [20, 30]})
 

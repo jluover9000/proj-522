@@ -1,4 +1,5 @@
-import pandera as pa
+import pandera.pandas as pa
+
 
 def validate_data(df, schema, raise_on_error: bool = False):
     """Validate DataFrame against schema and print results."""

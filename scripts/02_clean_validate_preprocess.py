@@ -20,8 +20,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 import click
 import pandas as pd
 import numpy as np
-import pandera as pa
-from pandera import Column, DataFrameSchema, Check
+import pandera.pandas as pa
+from pandera.pandas import Column, DataFrameSchema, Check
 from scipy.stats import chi2_contingency
 import warnings
 from src.preprocess import (
@@ -104,7 +104,6 @@ def define_schema():
         }
     )
     return schema
-
 
 
 def check_duplicates(df):
