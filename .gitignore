@@ -11,6 +11,7 @@ tests/__pycache__
 **.npm
 **.pytest_cache
 *.bash_history
+*.Rhistory
 
 **.cache/
 **.conda/
